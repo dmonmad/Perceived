@@ -62,8 +62,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\playerControl.cs" />
+    <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\ZombieAI.cs" />
+    <Compile Include="Assets\Scripts\ZombieStats.cs" />
     <None Include="Assets\Samples\Terrain Tools\0.1.0-preview\Terrain Assets\ThirdPartyNotices.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/UnityProjects/Perceived/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
