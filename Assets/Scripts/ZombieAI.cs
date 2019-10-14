@@ -26,15 +26,25 @@ public class ZombieAI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        Vector3 lastPosition;
+
+        RaycastHit hit;
+
+        bool targetBehindObject = Physics.Raycast(transform.position, new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z), out hit, sightDistance);
+
+
+
         if (target)
         {
             movetowards();
             
         }
 
-        if (outofradius)
+
+
+        if (outofradius || hit.collider.gameObject.tag!="zombie")
         {
             if(target && Vector3.Distance(target.transform.position, transform.position) > sightDistance)
             {
@@ -70,8 +80,14 @@ public class ZombieAI : MonoBehaviour
     {
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target.transform.position - transform.position), rotationSpeed * Time.deltaTime);
 
-        Vector3 direction = transform.position += transform.forward * zombieSpeed * Time.deltaTime;
+        Vector3 direction = transform.position += transform.forward * zombieSpeed * Time.fixedDeltaTime;
 
         rb.MovePosition(direction);
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        
     }
 }
