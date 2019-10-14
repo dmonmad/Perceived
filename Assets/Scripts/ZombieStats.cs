@@ -4,15 +4,39 @@ using UnityEngine;
 
 public class ZombieStats : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    public float zombiehealth;
+    public float damageMultiplier;
+    
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         
     }
+
+    public void GetDamage(float damage)
+    {
+        if(zombiehealth > 0)
+        {
+            zombiehealth -= damage * damageMultiplier;
+            if(zombiehealth < 0)
+            {
+                Die();
+            }
+        }
+
+        
+    }
+
+    void Die()
+    {
+        transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+    }
+    
 }

@@ -10,50 +10,55 @@ public class ZombieAI : MonoBehaviour
     public float noisetrigger;
 
     public float sightDistance;
-    public bool outofradius;
 
     public Player target;
     private Rigidbody rb;
     public float zombieSpeed;
     public float rotationSpeed;
 
+    Vector3 actualplayerpos;
+    Vector3 playerlastpos;
+
     // Start is called before the first frame update
     void Start()
     {
+        playerlastpos = Vector3.zero;
+
         rb = GetComponent<Rigidbody>();
         hearArea.radius = sightRadius;
-        outofradius = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 lastPosition;
 
         RaycastHit hit;
-
         bool targetBehindObject = Physics.Raycast(transform.position, new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z), out hit, sightDistance);
-
-
-
-        if (target)
+        if (Physics.Raycast(transform.position, transform.forward, out hit))
         {
-            movetowards();
+            if (hit.collider.gameObject)
+            {
+                Debug.DrawRay(transform.position, transform.forward * sightDistance, Color.red); print("Hit");
+            }
+        }
+
+
+
+        if (target && Vector3.Distance(target.transform.position, transform.position) < sightDistance)
+        {
+            playerlastpos = target.transform.position;
+            moveTowardsPlayer(target.transform.position);
             
         }
-
-
-
-        if (outofradius || hit.collider.gameObject.tag!="zombie")
+        else if(!playerlastpos.Equals(Vector3.zero))
         {
-            if(target && Vector3.Distance(target.transform.position, transform.position) > sightDistance)
-            {
-                
-                target = null;
-                
-            }
-
+            target = null;
+            moveTowardsLastPos(playerlastpos);
         }
+
+
+
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -66,25 +71,27 @@ public class ZombieAI : MonoBehaviour
 
     }
 
-    private void OnTriggerExit(Collider other)
+    void moveTowardsPlayer(Vector3 playerpos)
     {
-        
-        if (other.gameObject.tag == "player")
-        {
-            outofradius = true;
-        }
+        actualplayerpos = playerpos;
 
-    }
-
-    void movetowards()
-    {
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target.transform.position - transform.position), rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(actualplayerpos - transform.position), rotationSpeed * Time.deltaTime);
 
         Vector3 direction = transform.position += transform.forward * zombieSpeed * Time.fixedDeltaTime;
 
         rb.MovePosition(direction);
     }
 
+    void moveTowardsLastPos(Vector3 lastpos)
+    {
+        actualplayerpos = lastpos;
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lastpos - transform.position), rotationSpeed * Time.deltaTime);
+
+        Vector3 direction = transform.position += transform.forward * zombieSpeed * Time.fixedDeltaTime;
+
+        rb.MovePosition(direction);
+    }
 
     private void OnDrawGizmos()
     {
