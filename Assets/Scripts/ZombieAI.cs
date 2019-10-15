@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ZombieAI : MonoBehaviour
 {
+    public bool isAlive;
 
     public SphereCollider hearArea;
     public float sightRadius;
@@ -11,7 +12,7 @@ public class ZombieAI : MonoBehaviour
 
     public float sightDistance;
 
-    public Player target;
+    public PlayerStats target;
     private Rigidbody rb;
     public float zombieSpeed;
     public float rotationSpeed;
@@ -22,8 +23,8 @@ public class ZombieAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isAlive = true;
         playerlastpos = Vector3.zero;
-
         rb = GetComponent<Rigidbody>();
         hearArea.radius = sightRadius;
     }
@@ -31,7 +32,10 @@ public class ZombieAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
+        if (!isAlive)
+        {
+            return;
+        }
         RaycastHit hit;
         bool targetBehindObject = Physics.Raycast(transform.position, new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z), out hit, sightDistance);
         if (Physics.Raycast(transform.position, transform.forward, out hit))
@@ -63,9 +67,14 @@ public class ZombieAI : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!isAlive)
+        {
+            return;
+        }
+
         if (other.gameObject.tag == "player")
         {
-            target = other.gameObject.GetComponent<Player>();
+            target = other.gameObject.GetComponent<PlayerStats>();
         }
 
 
@@ -93,8 +102,10 @@ public class ZombieAI : MonoBehaviour
         rb.MovePosition(direction);
     }
 
-    private void OnDrawGizmos()
+    public void Die()
     {
-        
+        transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        isAlive = false;
+        GetComponent<Renderer>().material.color = Color.black;
     }
 }

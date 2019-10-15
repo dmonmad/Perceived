@@ -7,11 +7,12 @@ public class ZombieStats : MonoBehaviour
 
     public float zombiehealth;
     public float damageMultiplier;
-    
+    public ZombieAI aizomb;
 
     void Start()
     {
         
+        aizomb = GetComponent<ZombieAI>();
     }
 
     
@@ -27,16 +28,11 @@ public class ZombieStats : MonoBehaviour
             zombiehealth -= damage * damageMultiplier;
             if(zombiehealth < 0)
             {
-                Die();
+                aizomb.Die();
             }
         }
-
-        
     }
 
-    void Die()
-    {
-        transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-    }
+   
     
 }

@@ -4,8 +4,19 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - floor
+  - Item
+  - Target
+  - Wood
+  - Concrete
+  - Dirt
+  - Fire
+  - Metal
+  - Crosshair
+  - NPC
+  - Flesh
+  - Cover
   - player
+  - floor
   - zombie
   layers:
   - Default
@@ -28,9 +39,9 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - Weapon
+  - Player
+  - NPC
   - 
   - 
   - 
