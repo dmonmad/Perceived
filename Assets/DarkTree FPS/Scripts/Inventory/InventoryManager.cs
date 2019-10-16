@@ -19,7 +19,6 @@ namespace DarkTreeFPS
         Canvas canvas;
         FPSController controller;
         Blur blurEffect;
-        InputManager input;
 
         public static bool showInventory = false;
         public bool isOpen = true;
@@ -32,14 +31,13 @@ namespace DarkTreeFPS
             canvas = GetComponent<Canvas>();
             controller = FindObjectOfType<FPSController>();
             blurEffect = Camera.main.GetComponent<Blur>();
-            input = FindObjectOfType<InputManager>();
 
             InventoryClose();
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(input.Inventory) && !PlayerStats.isPlayerDead)
+            if (Input.GetKeyDown(null) && !PlayerStats.isPlayerDead)
             {
                 showInventory = !showInventory;
             }

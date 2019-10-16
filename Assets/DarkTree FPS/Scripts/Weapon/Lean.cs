@@ -7,7 +7,6 @@ namespace DarkTreeFPS
 
     public class Lean : MonoBehaviour
     {
-        InputManager inputManager;
 
         [Header("Lean Settings")]
         public float leanRotationSpeed = 80f;
@@ -25,12 +24,11 @@ namespace DarkTreeFPS
 
         private void Start()
         {
-            inputManager = FindObjectOfType<InputManager>();
         }
 
         void Update()
         {
-            if (Input.GetKey(inputManager.LeanLeft))
+            if (Input.GetKey(null))
             {
                 RaycastHit hit;
 
@@ -46,7 +44,7 @@ namespace DarkTreeFPS
                 }
 
             }
-            else if (Input.GetKey(inputManager.LeanRight))
+            else if (Input.GetKey(null))
             {
                 RaycastHit hit;
 

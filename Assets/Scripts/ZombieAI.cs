@@ -61,8 +61,6 @@ public class ZombieAI : MonoBehaviour
         }
 
 
-
-        
     }
 
     private void OnTriggerEnter(Collider other)

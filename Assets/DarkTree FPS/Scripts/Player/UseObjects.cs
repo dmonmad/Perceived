@@ -16,7 +16,6 @@ namespace DarkTreeFPS
         private GameObject useCursor;
         private Text useText;
 
-        private InputManager input;
         private Inventory inventory;
 
         private Button useButton;
@@ -28,7 +27,6 @@ namespace DarkTreeFPS
             useCursor.SetActive(false);
 
             inventory = FindObjectOfType<Inventory>();
-            input = FindObjectOfType<InputManager>();
             
         }
 
@@ -54,7 +52,7 @@ namespace DarkTreeFPS
                     if (use.GetComponent<Item>())
                     {
                         useText.text = use.GetComponent<Item>().title;
-                            if (Input.GetKeyDown(input.Use))
+                            if (Input.GetKeyDown(null))
                             {
                                 inventory.GiveItem(use.GetComponent<Item>());
                                 use = null;
@@ -67,7 +65,7 @@ namespace DarkTreeFPS
 
                         useText.text = use.GetComponent<WeaponPickup>().weaponNameToEquip;
                         
-                            if (Input.GetKeyDown(input.Use))
+                            if (Input.GetKeyDown(null))
                             {
                                 use.GetComponent<WeaponPickup>().Pickup();
                             }

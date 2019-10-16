@@ -53,7 +53,7 @@ namespace DarkTreeFPS
         
         Vector3 dirVector;
 
-        InputManager inputManager;
+
 
         private void Start()
         {
@@ -64,7 +64,7 @@ namespace DarkTreeFPS
             targetDirection = camHolder.transform.forward;
             weaponHolderAnimator = GameObject.Find("Weapon holder").GetComponent<Animator>();
 
-            inputManager = FindObjectOfType<InputManager>();
+
         }
 
         private void Update()
@@ -102,7 +102,7 @@ namespace DarkTreeFPS
                 else
                     weaponHolderAnimator.SetBool("Walk", false);
 
-                if (Input.GetKey(inputManager.Run) && !isClimbing && !crouch && weaponHolderAnimator.GetBool("Walk") == true)
+                if (Input.GetKey(null) && !isClimbing && !crouch && weaponHolderAnimator.GetBool("Walk") == true)
                 {
                     moveSpeedLocal = runSpeedMultiplier * moveSpeed;
                     weaponHolderAnimator.SetBool("Run", true);
@@ -131,11 +131,11 @@ namespace DarkTreeFPS
             else
                 weaponHolderAnimator.SetBool("Crouch", false);
 
-            if (Input.GetKeyDown(inputManager.Crouch))
+            if (Input.GetKeyDown(null))
             {
                 crouch = !crouch;
             }
-            if (Input.GetKeyDown(inputManager.Jump))
+            if (Input.GetKeyDown(null))
             {
                 Jump();
                 crouch = false;
@@ -154,7 +154,7 @@ namespace DarkTreeFPS
                 else
                     weaponHolderAnimator.SetBool("Walk", false);
 
-                if (InputManager.joystickInputVector.y > 0.5f && !isClimbing && !crouch && weaponHolderAnimator.GetBool("Walk") == true)
+                if (!isClimbing && !crouch && weaponHolderAnimator.GetBool("Walk") == true)
                 {
                     moveSpeedLocal = runSpeedMultiplier * moveSpeed;
                     weaponHolderAnimator.SetBool("Run", true);
@@ -183,11 +183,11 @@ namespace DarkTreeFPS
             else
                 weaponHolderAnimator.SetBool("Crouch", false);
 
-            if (Input.GetKeyDown(inputManager.Crouch))
+            if (Input.GetKeyDown(null))
             {
                 crouch = !crouch;
             }
-            if (Input.GetKeyDown(inputManager.Jump))
+            if (Input.GetKeyDown(null))
             {
                 Jump();
                 crouch = false;

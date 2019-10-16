@@ -155,7 +155,6 @@ namespace DarkTreeFPS
         private float movementSpreadFactor;
 
         private Inventory inventory;
-        private InputManager input;
         private Recoil recoilComponent;
         private Sway sway;
 
@@ -266,7 +265,7 @@ namespace DarkTreeFPS
             ricochetSounds = hitFXManager.ricochetSounds;
 
             inventory = FindObjectOfType<Inventory>();
-            input = FindObjectOfType<InputManager>();
+
 
             if (weaponManager.UseNonPhysicalReticle)
             {
@@ -285,11 +284,11 @@ namespace DarkTreeFPS
         {
             movementSpreadFactor = controller.GetVelocityMagnitude();
 
-            if (Input.GetKey(input.Fire)  && !PlayerStats.isPlayerDead && weaponType != WeaponType.Pistol && !InventoryManager.showInventory && fireMode == FireMode.automatic)  //Statement to restrict auto-fire for pistol weapon type. Riffle and others are automatic
+            if (Input.GetKey(null)  && !PlayerStats.isPlayerDead && weaponType != WeaponType.Pistol && !InventoryManager.showInventory && fireMode == FireMode.automatic)  //Statement to restrict auto-fire for pistol weapon type. Riffle and others are automatic
             {
                 Fire();
             }
-            else if (Input.GetKeyDown(input.Fire) && !PlayerStats.isPlayerDead && (weaponType == WeaponType.Pistol || fireMode == FireMode.single) && !InventoryManager.showInventory)
+            else if (Input.GetKeyDown(null) && !PlayerStats.isPlayerDead && (weaponType == WeaponType.Pistol || fireMode == FireMode.single) && !InventoryManager.showInventory)
             {
                 Fire();
             }
@@ -299,13 +298,13 @@ namespace DarkTreeFPS
                 //Reloading consists of two stages ReloadBegin and ReloadEnd  
                 //ReloadBegin method play animation and soundFX and also restrict weapon shooting. ReloadingEnd removes restriction and add ammo to weapon
                 //See more in methods below
-                if (Input.GetKeyDown(input.Reload) || currentAmmo < 0)
+                if (Input.GetKeyDown(null) || currentAmmo < 0)
                 {
                     if (!reloading && !controller.isClimbing)
                         ReloadBegin();
                 }
                 
-                    if (Input.GetKey(input.Aim))
+                    if (Input.GetKey(null))
                     {
                         setAim = true;
                         sway.xSwayAmount = sway.xSwayAmount*0.3f;
@@ -898,11 +897,11 @@ namespace DarkTreeFPS
         
         private void FireModeSwitch()
         {
-            if(Input.GetKeyDown(input.FiremodeAuto))
+            if(Input.GetKeyDown(null))
             {
                 fireMode = FireMode.automatic;
             }
-            if(Input.GetKeyDown(input.FiremodeSingle))
+            if(Input.GetKeyDown(null))
             {
                 fireMode = FireMode.single;
             }
