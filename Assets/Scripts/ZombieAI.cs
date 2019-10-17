@@ -103,7 +103,8 @@ public class ZombieAI : MonoBehaviour
     public void Die()
     {
         transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        transform.rotation = new Quaternion(-90, transform.rotation.y, transform.rotation.z, 0);
         isAlive = false;
-        GetComponent<Renderer>().material.color = Color.black;
+        
     }
 }
