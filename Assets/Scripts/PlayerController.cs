@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
 
     public Transform attackSphereTr;
+    public LayerMask zombieLayer;
 
     PlayerStats ps;
     Rigidbody rg;
@@ -90,9 +91,14 @@ public class PlayerController : MonoBehaviour
     void Fire()
     {
         RaycastHit hit;
-        if (Physics.SphereCast(attackSphereTr.position, 0.5f, attackSphereTr.TransformDirection(Vector3.forward), out hit) && hit.transform.tag == "zombie")
+
+        if (Physics.SphereCast(attackSphereTr.position, 2f, attackSphereTr.TransformDirection(Vector3.forward), out hit, zombieLayer))
         {
-            hit.transform.GetComponent<ZombieStats>().GetDamage(ps.AttackDamage);
+            Debug.Log("HITTING SOMETHING");
+            //hit.transform.gameObject.GetComponent<ZombieStats>().GetDamage(ps.AttackDamage);
+            Debug.Log(hit.transform.gameObject.tag);
+
+
         }
 
     }

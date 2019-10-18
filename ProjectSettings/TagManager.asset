@@ -18,6 +18,9 @@ TagManager:
   - player
   - floor
   - zombie
+  - Weapon
+  - SecondCamera
+  - BulletSpawn
   layers:
   - Default
   - TransparentFX
@@ -42,7 +45,7 @@ TagManager:
   - Weapon
   - Player
   - NPC
-  - 
+  - Zombie
   - 
   - 
   - 

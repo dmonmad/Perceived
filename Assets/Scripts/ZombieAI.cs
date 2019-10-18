@@ -17,6 +17,8 @@ public class ZombieAI : MonoBehaviour
     public float zombieSpeed;
     public float rotationSpeed;
 
+    private Animator anim;
+
     Vector3 actualplayerpos;
     Vector3 playerlastpos;
 
@@ -27,6 +29,7 @@ public class ZombieAI : MonoBehaviour
         playerlastpos = Vector3.zero;
         rb = GetComponent<Rigidbody>();
         hearArea.radius = sightRadius;
+        anim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -36,13 +39,14 @@ public class ZombieAI : MonoBehaviour
         {
             return;
         }
+
         RaycastHit hit;
         bool targetBehindObject = Physics.Raycast(transform.position, new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z), out hit, sightDistance);
         if (Physics.Raycast(transform.position, transform.forward, out hit))
         {
             if (hit.collider.gameObject)
             {
-                Debug.DrawRay(transform.position, transform.forward * sightDistance, Color.red); print("Hit");
+                Debug.DrawRay(transform.position, transform.forward * sightDistance, Color.red);
             }
         }
 
@@ -58,6 +62,13 @@ public class ZombieAI : MonoBehaviour
         {
             target = null;
             moveTowardsLastPos(playerlastpos);
+        }
+        else
+        {
+            if (anim.GetBool("isWalking"))
+            {
+                anim.SetBool("isWalking", false);
+            }
         }
 
 
@@ -80,6 +91,11 @@ public class ZombieAI : MonoBehaviour
 
     void moveTowardsPlayer(Vector3 playerpos)
     {
+        if (!anim.GetBool("isWalking"))
+        {
+            anim.SetBool("isWalking", true);
+        }
+
         actualplayerpos = playerpos;
 
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(actualplayerpos - transform.position), rotationSpeed * Time.deltaTime);
@@ -91,6 +107,12 @@ public class ZombieAI : MonoBehaviour
 
     void moveTowardsLastPos(Vector3 lastpos)
     {
+
+        if (!anim.GetBool("isWalking"))
+        {
+            anim.SetBool("isWalking", true);
+        }
+
         actualplayerpos = lastpos;
 
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lastpos - transform.position), rotationSpeed * Time.deltaTime);
@@ -98,6 +120,8 @@ public class ZombieAI : MonoBehaviour
         Vector3 direction = transform.position += transform.forward * zombieSpeed * Time.fixedDeltaTime;
 
         rb.MovePosition(direction);
+
+        
     }
 
     public void Die()
