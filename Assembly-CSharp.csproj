@@ -101,10 +101,14 @@
     <Compile Include="Assets\Easy FPS\Scripts\GunScript.cs" />
     <Compile Include="Assets\Easy FPS\Scripts\MouseLookScript.cs" />
     <Compile Include="Assets\Easy FPS\Scripts\PlayerMovementScript.cs" />
+    <Compile Include="Assets\MoveMotionPack\SampleScene\Scripts\PlayManager.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\ZombieAI.cs" />
     <Compile Include="Assets\Scripts\ZombieStats.cs" />
+    <None Include="Assets\MoveMotionPack\SampleScene\Shaders\ReflectiveDiffuseSpecTransp.shader" />
+    <None Include="Assets\MoveMotionPack\SampleScene\Shaders\DiffuseReflectiveShader.shader" />
+    <None Include="Assets\MoveMotionPack\SampleScene\Shaders\ReflectiveDiffuseSpec.shader" />
     <None Include="Assets\DarkTree FPS\Standard Assets\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />
     <None Include="Assets\DarkTree FPS\Standard Assets\ParticleSystems\ParticleSystemsGuidelines.txt" />
     <None Include="Assets\DarkTree FPS\Standard Assets\ParticleSystems\Shaders\PriorityParticleAddSoft.shader" />
@@ -144,6 +148,12 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>D:/UnityProjects/Perceived/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
+      <HintPath>D:/UnityProjects/Perceived/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProBuilder.AddOns.Editor">
+      <HintPath>D:/UnityProjects/Perceived/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/Unity/2019.2.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
