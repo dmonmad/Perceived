@@ -23,7 +23,7 @@ public class ZombieStats : MonoBehaviour
 
     public void GetDamage(float damage)
     {
-        Debug.Log("Got hit");
+        Debug.Log("ZOMB // Got hit");
         if(zombiehealth > 0)
         {
             zombiehealth -= damage * damageMultiplier;

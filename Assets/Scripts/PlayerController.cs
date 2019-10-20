@@ -92,11 +92,18 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.SphereCast(attackSphereTr.position, 2f, attackSphereTr.TransformDirection(Vector3.forward), out hit, zombieLayer))
+        Debug.DrawRay(attackSphereTr.transform.position, attackSphereTr.TransformDirection(Vector3.forward) * 0.2f, Color.green);
+
+        if (Physics.Raycast(attackSphereTr.position, attackSphereTr.TransformDirection(Vector3.forward) * 0.5f, out hit))
         {
             Debug.Log("HITTING SOMETHING");
-            //hit.transform.gameObject.GetComponent<ZombieStats>().GetDamage(ps.AttackDamage);
             Debug.Log(hit.transform.gameObject.tag);
+            if (hit.collider.GetType() == typeof(BoxCollider) && hit.transform.gameObject.tag.Equals("zombie"))
+            {
+                Debug.Log("HITTING --------BOX");
+                hit.transform.gameObject.GetComponent<ZombieStats>().GetDamage(ps.AttackDamage);
+            }
+
 
 
         }
