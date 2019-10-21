@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ZombieAI : MonoBehaviour
 {
+    ZombieStats zs;
     public bool isAlive;
+    public bool isAttacking;
 
     public SphereCollider hearArea;
     public float sightRadius;
@@ -21,11 +23,14 @@ public class ZombieAI : MonoBehaviour
 
     Vector3 actualplayerpos;
     Vector3 playerlastpos;
+    public float distanceToAttack;
 
     // Start is called before the first frame update
     void Start()
     {
+        zs = GetComponent<ZombieStats>();
         isAlive = true;
+        isAttacking = false;
         playerlastpos = Vector3.zero;
         rb = GetComponent<Rigidbody>();
         hearArea.radius = sightRadius;
@@ -52,24 +57,29 @@ public class ZombieAI : MonoBehaviour
 
 
 
-        if (target && Vector3.Distance(target.transform.position, transform.position) < sightDistance)
+        if (!isAttacking)
         {
-            playerlastpos = target.transform.position;
-            moveTowardsPlayer(target.transform.position);
-            
-        }
-        else if (!target && playerlastpos != Vector3.zero)
-        {
-            target = null;
-            moveTowardsLastPos(playerlastpos);
-        }
-        else
-        {
-            if (anim.GetBool("isWalking"))
+            if (target && Vector3.Distance(target.transform.position, transform.position) < sightDistance)
             {
-                anim.SetBool("isWalking", false);
+                playerlastpos = target.transform.position;
+                moveTowardsPlayer(target.transform.position);
+
+            }
+            else if (!target && playerlastpos != Vector3.zero)
+            {
+                target = null;
+                moveTowardsLastPos(playerlastpos);
+            }
+            else
+            {
+                if (anim.GetBool("isWalking"))
+                {
+                    anim.SetBool("isWalking", false);
+                }
             }
         }
+
+        
 
 
     }
@@ -91,6 +101,13 @@ public class ZombieAI : MonoBehaviour
 
     void moveTowardsPlayer(Vector3 playerpos)
     {
+
+        if (Vector3.Distance(actualplayerpos, gameObject.transform.position) < distanceToAttack)
+        {
+            Attack();
+            return;
+        }
+
         if (!anim.GetBool("isWalking"))
         {
             anim.SetBool("isWalking", true);
@@ -103,23 +120,31 @@ public class ZombieAI : MonoBehaviour
         Vector3 direction = transform.position += transform.forward * zombieSpeed * Time.fixedDeltaTime;
 
         rb.MovePosition(direction);
+
+        
     }
 
     void moveTowardsLastPos(Vector3 lastpos)
     {
+
+        if (Vector3.Distance(lastpos, gameObject.transform.position) < distanceToAttack)
+        {
+            playerlastpos = Vector3.zero;
+            return;
+        }
 
         if (!anim.GetBool("isWalking"))
         {
             anim.SetBool("isWalking", true);
         }
 
-        actualplayerpos = lastpos;
-
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lastpos - transform.position), rotationSpeed * Time.deltaTime);
 
         Vector3 direction = transform.position += transform.forward * zombieSpeed * Time.fixedDeltaTime;
 
         rb.MovePosition(direction);
+
+        
 
         
     }
@@ -132,7 +157,33 @@ public class ZombieAI : MonoBehaviour
         
     }
 
+    public void Attack()
+    {
+        isAttacking = true;
+        anim.SetBool("isWalking", false);
+        anim.SetBool("isAttacking", true);
+    }
 
+    public void AnimAttack()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(gameObject.transform.position, gameObject.transform.TransformDirection(Vector3.forward), out hit, 2f))
+        {
+            Debug.Log("ZOMBIE HIT TAG:"+hit.transform.gameObject.tag);
+
+            if (hit.collider.GetType() == typeof(CapsuleCollider) && hit.transform.gameObject.tag.Equals("player"))
+            {
+                Debug.Log("HITTING PLAYER");
+                hit.transform.gameObject.GetComponent<PlayerStats>().GetDamage(zs.attackDamage);
+            }
+
+
+
+        }
+
+
+    }
 
 
 }

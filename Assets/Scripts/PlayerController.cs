@@ -99,13 +99,11 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(gameObject.transform.position, gameObject.transform.TransformDirection(Vector3.forward), out hit, 1f))
         {
-            Debug.Log(hit.distance);
-            Debug.Log("HITTING SOMETHING");
-            Debug.Log(hit.transform.gameObject.tag);
+            Debug.Log("PLAYER HIT TAG:"+hit.transform.gameObject.tag);
 
             if (hit.collider.GetType() == typeof(BoxCollider) && hit.transform.gameObject.tag.Equals("zombie"))
             {
-                Debug.Log("HITTING --------BOX");
+                Debug.Log("PLAYER // HITTING ZOMBIE");
                 hit.transform.gameObject.GetComponent<ZombieStats>().GetDamage(ps.attackDamage);
             }
 

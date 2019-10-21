@@ -25,15 +25,18 @@ public class PlayerStats : MonoBehaviour
         
     }
 
-    public void getDamage(float damage)
+    public void GetDamage(float damage)
     {
+
+        Debug.Log("PLAYER / GET DAMAGE " + damage);
         if (health > 0)
         {
             health -= damage;
-            if (health < 0)
-            {
-                playerc.Die();
-            }
+
+        }
+        else
+        {
+            playerc.Die();
         }
 
 
