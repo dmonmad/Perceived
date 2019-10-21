@@ -384,7 +384,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 579f0a7fc0f69854c9424936cbcb9db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackDamage: 400
+  maxHealth: 0
+  health: 0
+  energy: 0
+  hunger: 0
+  attackDamage: 200
 --- !u!1 &609505525
 GameObject:
   m_ObjectHideFlags: 0

@@ -58,7 +58,7 @@ public class ZombieAI : MonoBehaviour
             moveTowardsPlayer(target.transform.position);
             
         }
-        else if(!playerlastpos.Equals(Vector3.zero))
+        else if (!target && playerlastpos != Vector3.zero)
         {
             target = null;
             moveTowardsLastPos(playerlastpos);
@@ -131,4 +131,8 @@ public class ZombieAI : MonoBehaviour
         isAlive = false;
         
     }
+
+
+
+
 }

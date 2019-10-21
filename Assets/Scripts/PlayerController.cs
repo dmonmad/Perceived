@@ -42,6 +42,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.TransformDirection(Vector3.forward) * 1f, Color.blue);
+
+
         camerarotation();        
         movement();
 
@@ -92,16 +95,18 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
 
-        Debug.DrawRay(attackSphereTr.transform.position, attackSphereTr.TransformDirection(Vector3.forward) * 0.2f, Color.green);
+        
 
-        if (Physics.Raycast(attackSphereTr.position, attackSphereTr.TransformDirection(Vector3.forward) * 0.5f, out hit))
+        if (Physics.Raycast(gameObject.transform.position, gameObject.transform.TransformDirection(Vector3.forward), out hit, 1f))
         {
+            Debug.Log(hit.distance);
             Debug.Log("HITTING SOMETHING");
             Debug.Log(hit.transform.gameObject.tag);
+
             if (hit.collider.GetType() == typeof(BoxCollider) && hit.transform.gameObject.tag.Equals("zombie"))
             {
                 Debug.Log("HITTING --------BOX");
-                hit.transform.gameObject.GetComponent<ZombieStats>().GetDamage(ps.AttackDamage);
+                hit.transform.gameObject.GetComponent<ZombieStats>().GetDamage(ps.attackDamage);
             }
 
 
@@ -118,6 +123,11 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;
             
         }
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 
 
