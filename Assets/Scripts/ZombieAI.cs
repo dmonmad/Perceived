@@ -1,29 +1,33 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ZombieAI : MonoBehaviour
 {
+    [Header("Control Variables")]
     ZombieStats zs;
     public bool isAlive;
     public bool isAttacking;
 
+    [Header("Detection variables")]
+
     public SphereCollider hearArea;
     public float sightRadius;
+    public float sightRadiusWithTarget;
     public float noisetrigger;
-
+    public float distanceToAttack;
     public float sightDistance;
 
+
+    [Header("Zombie Variables")]
     public PlayerStats target;
     private Rigidbody rb;
     public float zombieSpeed;
     public float rotationSpeed;
 
     private Animator anim;
-
-    Vector3 actualplayerpos;
     Vector3 playerlastpos;
-    public float distanceToAttack;
 
     // Start is called before the first frame update
     void Start()
@@ -45,29 +49,31 @@ public class ZombieAI : MonoBehaviour
             return;
         }
 
-        RaycastHit hit;
-        bool targetBehindObject = Physics.Raycast(transform.position, new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z), out hit, sightDistance);
-        if (Physics.Raycast(transform.position, transform.forward, out hit))
-        {
-            if (hit.collider.gameObject)
-            {
-                Debug.DrawRay(transform.position, transform.forward * sightDistance, Color.red);
-            }
-        }
-
-
+        
 
         if (!isAttacking)
         {
-            if (target && Vector3.Distance(target.transform.position, transform.position) < sightDistance)
+            if (target)
             {
-                playerlastpos = target.transform.position;
-                moveTowardsPlayer(target.transform.position);
+                CheckIfBehindObject();
 
+                float distance = Vector3.Distance(target.transform.position, transform.position);
+
+                if (distance < sightDistance)
+                {
+                    Debug.Log("SEEKING PLAYER");
+                    playerlastpos = target.transform.position;
+                    moveTowardsPlayer(target.transform.position, distance);
+                }
+
+                if (distance > sightDistance)
+                {
+                    Debug.LogWarning("TARGET IS OUT. TARGET NULL");
+                    target = null;
+                }
             }
             else if (!target && playerlastpos != Vector3.zero)
             {
-                target = null;
                 moveTowardsLastPos(playerlastpos);
             }
             else
@@ -78,10 +84,22 @@ public class ZombieAI : MonoBehaviour
                 }
             }
         }
+    }
 
-        
+    private bool CheckIfBehindObject()
+    {
+        bool targetBehindObject = false;
 
+        RaycastHit hit;
 
+        if (Physics.Raycast(transform.position, transform.forward * sightDistance, out hit, sightDistance))
+        {
+            if (hit.collider.gameObject.tag != "zombie" || hit.collider.gameObject.tag != "player")
+            {
+                targetBehindObject = true;
+            }
+        }
+        return targetBehindObject;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -94,15 +112,14 @@ public class ZombieAI : MonoBehaviour
         if (other.gameObject.tag == "player")
         {
             target = other.gameObject.GetComponent<PlayerStats>();
+            hearArea.radius = sightRadiusWithTarget;
         }
-
-
     }
 
-    void moveTowardsPlayer(Vector3 playerpos)
+    void moveTowardsPlayer(Vector3 playerpos, float distance)
     {
-
-        if (Vector3.Distance(actualplayerpos, gameObject.transform.position) < distanceToAttack)
+        Debug.Log(distance);
+        if (distance < distanceToAttack)
         {
             Attack();
             return;
@@ -113,15 +130,11 @@ public class ZombieAI : MonoBehaviour
             anim.SetBool("isWalking", true);
         }
 
-        actualplayerpos = playerpos;
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(actualplayerpos - transform.position), rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerpos - transform.position), rotationSpeed * Time.deltaTime);
 
         Vector3 direction = transform.position += transform.forward * zombieSpeed * Time.fixedDeltaTime;
 
         rb.MovePosition(direction);
-
-        
     }
 
     void moveTowardsLastPos(Vector3 lastpos)
@@ -130,6 +143,7 @@ public class ZombieAI : MonoBehaviour
         if (Vector3.Distance(lastpos, gameObject.transform.position) < distanceToAttack)
         {
             playerlastpos = Vector3.zero;
+            hearArea.radius = sightRadius;
             return;
         }
 
@@ -143,10 +157,6 @@ public class ZombieAI : MonoBehaviour
         Vector3 direction = transform.position += transform.forward * zombieSpeed * Time.fixedDeltaTime;
 
         rb.MovePosition(direction);
-
-        
-
-        
     }
 
     public void Die()
@@ -178,11 +188,7 @@ public class ZombieAI : MonoBehaviour
                 hit.transform.gameObject.GetComponent<PlayerStats>().GetDamage(zs.attackDamage);
             }
 
-
-
         }
-
-
     }
 
 

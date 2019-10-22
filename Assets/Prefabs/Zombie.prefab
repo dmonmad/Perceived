@@ -1611,12 +1611,13 @@ MonoBehaviour:
   isAttacking: 0
   hearArea: {fileID: 5353426984125536001}
   sightRadius: 10
+  sightRadiusWithTarget: 20
   noisetrigger: 10
-  sightDistance: 20
+  distanceToAttack: 1.5
+  sightDistance: 20.5
   target: {fileID: 0}
   zombieSpeed: 1
   rotationSpeed: 3
-  distanceToAttack: 2
 --- !u!54 &5353426984125536004
 Rigidbody:
   m_ObjectHideFlags: 0
