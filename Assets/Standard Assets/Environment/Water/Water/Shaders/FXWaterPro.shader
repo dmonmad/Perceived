@@ -8,6 +8,9 @@ Properties {
 	_RefrColor ("Refraction color", COLOR)  = ( .34, .85, .92, 1)
 	[NoScaleOffset] _Fresnel ("Fresnel (A) ", 2D) = "gray" {}
 	[NoScaleOffset] _BumpMap ("Normalmap ", 2D) = "bump" {}
+	[NoScaleOffset] _Foam("Foam texture", 2D) = "white" {}
+	[NoScaleOffset] _FoamGradient("Foam gradient ", 2D) = "white" {}
+	_FoamStrength("Foam strength", Range(0, 10.0)) = 1.0
 	WaveSpeed ("Wave speed (map1 x,y; map2 x,y)", Vector) = (19,9,-16,-7)
 	[NoScaleOffset] _ReflectiveColor ("Reflective color (RGB) fresnel (A) ", 2D) = "" {}
 	_HorizonColor ("Simple water horizon color", COLOR)  = ( .172, .463, .435, 1)
@@ -36,11 +39,19 @@ CGPROGRAM
 #define HAS_REFRACTION 1
 #endif
 
+#if defined(HAS_REFLECTION) || defined(HAS_REFRACTION)
+#define HAS_FOAM
+#endif
 
 #include "UnityCG.cginc"
 
 uniform float4 _WaveScale4;
 uniform float4 _WaveOffset;
+
+#if defined(HAS_FOAM)
+uniform float _FoamStrength;
+uniform sampler2D _CameraDepthTexture; //Depth Texture
+#endif
 
 #if HAS_REFLECTION
 uniform float _ReflDistort;
@@ -61,6 +72,9 @@ struct v2f {
 		float2 bumpuv0 : TEXCOORD1;
 		float2 bumpuv1 : TEXCOORD2;
 		float3 viewDir : TEXCOORD3;
+		#if defined(HAS_FOAM)
+			float2 foamuv : TEXCOORD4;
+		#endif
 	#else
 		float2 bumpuv0 : TEXCOORD0;
 		float2 bumpuv1 : TEXCOORD1;
@@ -82,6 +96,10 @@ v2f vert(appdata v)
 	o.bumpuv0 = temp.xy;
 	o.bumpuv1 = temp.wz;
 	
+#if defined(HAS_FOAM)	
+	o.foamuv = 7.0f * wpos.xz + 0.05 * float2(_SinTime.w, _SinTime.w);
+#endif
+
 	// object space view direction (will normalize per pixel)
 	o.viewDir.xzy = WorldSpaceViewDir(v.vertex);
 	
@@ -108,6 +126,11 @@ uniform float4 _RefrColor;
 uniform float4 _HorizonColor;
 #endif
 sampler2D _BumpMap;
+
+#if defined(HAS_FOAM)
+sampler2D _Foam;
+sampler2D _FoamGradient;
+#endif
 
 half4 frag( v2f i ) : SV_Target
 {
@@ -151,6 +174,17 @@ half4 frag( v2f i ) : SV_Target
 	color.rgb = lerp( water.rgb, _HorizonColor.rgb, water.a );
 	color.a = _HorizonColor.a;
 	#endif
+
+#if defined(HAS_FOAM)
+	float sceneZ = LinearEyeDepth(tex2Dproj(_CameraDepthTexture, UNITY_PROJ_COORD(i.ref)).r);
+	float objectZ = i.ref.w;
+	float intensityFactor = 1 - saturate((sceneZ - objectZ) / _FoamStrength);
+	half3 foamGradient = 1 - tex2D(_FoamGradient, float2(intensityFactor - _Time.y*0.15, 0) + bump.xy * 0.15);
+	float2 foamDistortUV = bump.xy * 0.2;
+	half3 foamColor = tex2D(_Foam, i.foamuv + foamDistortUV).rgb;
+	half foamLightIntensity = saturate((-_WorldSpaceLightPos0.y + 0.2) * 4);
+	color.rgb += foamGradient * intensityFactor * foamColor * foamLightIntensity;
+#endif
 
 	UNITY_APPLY_FOG(i.fogCoord, color);
 	return color;
