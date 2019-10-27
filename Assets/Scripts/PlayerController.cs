@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     public float fuerzaSalto;
     public bool isGrounded;
 
-    public Transform attackSphereTr;
     public LayerMask zombieLayer;
 
     PlayerStats ps;
@@ -85,7 +84,7 @@ public class PlayerController : MonoBehaviour
     {
 
         xRotate += Input.GetAxis("Mouse X");
-        yRotate = Mathf.Min(50, Mathf.Max(-50, yRotate + Input.GetAxis("Mouse Y")));
+        yRotate = Mathf.Min(minAngle, Mathf.Max(maxAngle, yRotate + Input.GetAxis("Mouse Y")));
         gameObject.transform.localRotation = Quaternion.Euler(0, xRotate, 0);
         CameraPlayer.transform.localRotation = Quaternion.Euler(-yRotate, 0, 0);
 

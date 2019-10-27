@@ -163,7 +163,6 @@
     <Compile Include="Assets\Scripts\ZombieAI.cs" />
     <Compile Include="Assets\Scripts\ZombieStats.cs" />
     <None Include="Assets\crest\Assets\Crest\Crest\Shaders\OceanInputs\Resources\OceanDepthsCache.shader" />
-    <None Include="Assets\crest-master\crest-master\doc\OceanDensity.txt" />
     <None Include="Assets\crest\Assets\Crest\Crest\Shaders\OceanInputs\Masks\MaskUsingDepth.shader" />
     <None Include="Assets\crest\ProjectSettings\ProjectVersion.txt" />
     <None Include="Assets\crest\Assets\Crest\Crest\Shaders\OceanInputs\AnimWavesAddHeightFromGeometry.shader" />

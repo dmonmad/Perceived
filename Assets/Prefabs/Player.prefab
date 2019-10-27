@@ -127,8 +127,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CameraPlayer: {fileID: 576658274196200530}
   sensibility: 1.5
-  minAngle: 0
-  maxAngle: 0
+  minAngle: 80
+  maxAngle: -80
   velocidadbase: 600
   velocidad: 1
   run: 1
