@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+
     [Header("Camera Settings")]
     public Transform CameraPlayer;
     public float sensibility;
@@ -15,27 +17,36 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement Settings")]
 
+    public CharacterController controller;
     public float velocidadbase;
     public float velocidad;
     public float run;
+    public float gravity;
+    public Transform groundCheck;
+    public LayerMask groundMask;
+    public float groundDistance;
     public float fuerzaSalto;
-    public bool isGrounded;
+    bool isGrounded;
 
     public LayerMask zombieLayer;
 
     PlayerStats ps;
     Rigidbody rg;
     Transform tr;
+    Vector3 velocity;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        //gravity = -9.81f;
+        groundDistance = 0.3f;
         velocidad = velocidadbase;
-        rg = GetComponent<Rigidbody>();
+        //rg = GetComponent<Rigidbody>();
         tr = this.transform;
         ps = GetComponent<PlayerStats>();
+        controller = GetComponent<CharacterController>();
 
     }
 
@@ -57,26 +68,43 @@ public class PlayerController : MonoBehaviour
     void movement()
     {
 
-        if (Input.GetKey(KeyCode.Space) && isGrounded)
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if (isGrounded && velocity.y < 0)
         {
-            rg.AddForce(tr.up * fuerzaSalto);
-            isGrounded = false;
+            velocity.y = -2f;
         }
 
-        Vector3 sp = rg.velocity;
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
-        float deltaX = Input.GetAxis("Horizontal");
-        float deltaZ = Input.GetAxis("Vertical");
-        float deltaT = Time.deltaTime;
+        Vector3 move = transform.right * x + transform.forward * z;
 
-        Vector3 side = velocidad * deltaX * deltaT * tr.right;
-        Vector3 forward = velocidad * deltaZ * deltaT * tr.forward;
+        controller.Move(move * velocidad * Time.deltaTime);
 
-        Vector3 endSpeed = side + forward;
+        if(Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(fuerzaSalto * -2f * gravity);
+        }
 
-        endSpeed.y = sp.y;
+        velocity.y += gravity * Time.deltaTime;
 
-        rg.velocity = endSpeed;
+        controller.Move(velocity * Time.deltaTime);
+
+        //Vector3 sp = rg.velocity;
+
+        //float deltaX = Input.GetAxis("Horizontal");
+        //float deltaZ = Input.GetAxis("Vertical");
+        //float deltaT = Time.deltaTime;
+
+        //Vector3 side = velocidad * deltaX * deltaT * tr.right;
+        //Vector3 forward = velocidad * deltaZ * deltaT * tr.forward;
+
+        //Vector3 endSpeed = side + forward;
+
+        //endSpeed.y = sp.y;
+
+        //rg.velocity = endSpeed;
 
     }
 
@@ -112,22 +140,12 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        if (collision.gameObject.tag == "floor")
-        {
-            isGrounded = true;
-            
-        }
-    }
-
     public void Die()
     {
         Destroy(gameObject);
     }
 
-
+    
 
 
 }

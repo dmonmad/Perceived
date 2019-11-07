@@ -2,9 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ZombieAI : MonoBehaviour
 {
+    bool active;
+
     [Header("Control Variables")]
     ZombieStats zs;
     public bool isAlive;
@@ -18,6 +21,7 @@ public class ZombieAI : MonoBehaviour
     public float noisetrigger;
     public float distanceToAttack;
     public float sightDistance;
+    public LayerMask PlayerMask;
 
 
     [Header("Zombie Variables")]
@@ -26,12 +30,16 @@ public class ZombieAI : MonoBehaviour
     public float zombieSpeed;
     public float rotationSpeed;
 
+    [Header("Movement Variables")]
+    NavMeshAgent agent;
+
     private Animator anim;
     Vector3 playerlastpos;
 
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(SetActive());
         zs = GetComponent<ZombieStats>();
         isAlive = true;
         isAttacking = false;
@@ -39,48 +47,56 @@ public class ZombieAI : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         hearArea.radius = sightRadius;
         anim = GetComponentInChildren<Animator>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!isAlive)
+        if (active)
         {
-            return;
-        }
 
-        
 
-        if (!isAttacking)
-        {
-            if (target)
+            if (!isAlive)
             {
-                CheckIfBehindObject();
-
-                float distance = Vector3.Distance(target.transform.position, transform.position);
-
-                if (distance < sightDistance)
-                {
-                    Debug.Log("SEEKING PLAYER");
-                    playerlastpos = target.transform.position;
-                    moveTowardsPlayer(target.transform.position, distance);
-                }
-
-                if (distance > sightDistance)
-                {
-                    Debug.LogWarning("TARGET IS OUT. TARGET NULL");
-                    target = null;
-                }
+                return;
             }
-            else if (!target && playerlastpos != Vector3.zero)
+
+
+
+            if (!isAttacking)
             {
-                moveTowardsLastPos(playerlastpos);
-            }
-            else
-            {
-                if (anim.GetBool("isWalking"))
+                if (target)
                 {
-                    anim.SetBool("isWalking", false);
+                    CheckIfBehindObject();
+
+                    float distance = Vector3.Distance(target.transform.position, transform.position);
+
+                    if (distance < sightDistance)
+                    {
+                        Debug.Log("SEEKING PLAYER");
+                        playerlastpos = target.transform.position;
+                        //moveTowardsPlayer(target.transform.position, distance);
+                        agent.SetDestination(target.transform.position);
+                    }
+
+                    if (distance > sightDistance)
+                    {
+                        Debug.LogWarning("TARGET IS OUT. TARGET NULL");
+                        target = null;
+
+                    }
+                }
+                else if (!target && playerlastpos != Vector3.zero)
+                {
+                    //moveTowardsLastPos(playerlastpos);
+                }
+                else
+                {
+                    if (anim.GetBool("isWalking"))
+                    {
+                        anim.SetBool("isWalking", false);
+                    }
                 }
             }
         }
@@ -92,7 +108,7 @@ public class ZombieAI : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.forward * sightDistance, out hit, sightDistance))
+        if (Physics.Raycast(transform.position, transform.forward * sightDistance, out hit, sightDistance, PlayerMask))
         {
             if (hit.collider.gameObject.tag != "zombie" || hit.collider.gameObject.tag != "player")
             {
@@ -116,48 +132,48 @@ public class ZombieAI : MonoBehaviour
         }
     }
 
-    void moveTowardsPlayer(Vector3 playerpos, float distance)
-    {
-        Debug.Log(distance);
-        if (distance < distanceToAttack)
-        {
-            Attack();
-            return;
-        }
+    //void moveTowardsPlayer(Vector3 playerpos, float distance)
+    //{
+    //    Debug.Log(distance);
+    //    if (distance < distanceToAttack)
+    //    {
+    //        Attack();
+    //        return;
+    //    }
 
-        if (!anim.GetBool("isWalking"))
-        {
-            anim.SetBool("isWalking", true);
-        }
+    //    if (!anim.GetBool("isWalking"))
+    //    {
+    //        anim.SetBool("isWalking", true);
+    //    }
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerpos - transform.position), rotationSpeed * Time.deltaTime);
+    //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerpos - transform.position), rotationSpeed * Time.deltaTime);
 
-        Vector3 direction = transform.position += transform.forward * zombieSpeed * Time.fixedDeltaTime;
+    //    Vector3 direction = transform.position += transform.forward * zombieSpeed * Time.fixedDeltaTime;
 
-        rb.MovePosition(direction);
-    }
+    //    agent.SetDestination(direction);
+    //}
 
-    void moveTowardsLastPos(Vector3 lastpos)
-    {
+    //void moveTowardsLastPos(Vector3 lastpos)
+    //{
 
-        if (Vector3.Distance(lastpos, gameObject.transform.position) < distanceToAttack)
-        {
-            playerlastpos = Vector3.zero;
-            hearArea.radius = sightRadius;
-            return;
-        }
+    //    if (Vector3.Distance(lastpos, gameObject.transform.position) < distanceToAttack)
+    //    {
+    //        playerlastpos = Vector3.zero;
+    //        hearArea.radius = sightRadius;
+    //        return;
+    //    }
 
-        if (!anim.GetBool("isWalking"))
-        {
-            anim.SetBool("isWalking", true);
-        }
+    //    if (!anim.GetBool("isWalking"))
+    //    {
+    //        anim.SetBool("isWalking", true);
+    //    }
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lastpos - transform.position), rotationSpeed * Time.deltaTime);
+    //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lastpos - transform.position), rotationSpeed * Time.deltaTime);
 
-        Vector3 direction = transform.position += transform.forward * zombieSpeed * Time.fixedDeltaTime;
+    //    Vector3 direction = transform.position += transform.forward * zombieSpeed * Time.fixedDeltaTime;
 
-        rb.MovePosition(direction);
-    }
+    //    agent.SetDestination(direction);
+    //}
 
     public void Die()
     {
@@ -189,6 +205,12 @@ public class ZombieAI : MonoBehaviour
             }
 
         }
+    }
+
+    private IEnumerator SetActive()
+    {
+        yield return new WaitForSeconds(3);
+        active = true;
     }
 
 
