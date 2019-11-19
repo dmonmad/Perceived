@@ -2077,7 +2077,7 @@ GameObject:
   - component: {fileID: 576658274610780953}
   - component: {fileID: 576658274610780952}
   - component: {fileID: 576658274610780956}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Player
   m_TagString: player
   m_Icon: {fileID: 0}
@@ -3550,13 +3550,12 @@ MonoBehaviour:
   isAttacking: 0
   hearArea: {fileID: 5353426982765639110}
   sightRadius: 10
-  sightRadiusWithTarget: 20
+  hearRadiusWithTarget: 0
   noisetrigger: 10
-  distanceToAttack: 1.5
   sightDistance: 20.5
   PlayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2097152
   target: {fileID: 0}
   zombieSpeed: 1
   rotationSpeed: 3
@@ -3591,7 +3590,7 @@ BoxCollider:
   m_GameObject: {fileID: 5353426982765639113}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 2.7, z: 1}
   m_Center: {x: 0, y: 0.47, z: 0}
@@ -3609,7 +3608,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

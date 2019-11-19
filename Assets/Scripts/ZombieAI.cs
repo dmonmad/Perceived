@@ -17,9 +17,8 @@ public class ZombieAI : MonoBehaviour
 
     public SphereCollider hearArea;
     public float sightRadius;
-    public float sightRadiusWithTarget;
+    public float hearRadiusWithTarget;
     public float noisetrigger;
-    public float distanceToAttack;
     public float sightDistance;
     public LayerMask PlayerMask;
 
@@ -55,29 +54,33 @@ public class ZombieAI : MonoBehaviour
     {
         if (active)
         {
-
-
             if (!isAlive)
             {
                 return;
             }
 
-
-
             if (!isAttacking)
             {
                 if (target)
                 {
-                    CheckIfBehindObject();
 
                     float distance = Vector3.Distance(target.transform.position, transform.position);
 
                     if (distance < sightDistance)
                     {
-                        Debug.Log("SEEKING PLAYER");
-                        playerlastpos = target.transform.position;
-                        //moveTowardsPlayer(target.transform.position, distance);
-                        agent.SetDestination(target.transform.position);
+                        if (!CheckIfBehindObject())
+                        {
+                            Debug.Log("SEEKING PLAYER");
+                            playerlastpos = target.transform.position;
+                            agent.SetDestination(target.transform.position);
+                        }
+                        else
+                        {
+                            playerlastpos = target.transform.position;
+                            agent.SetDestination(target.transform.position);
+                            target = null;
+                        }
+                        
                     }
 
                     if (distance > sightDistance)
@@ -128,7 +131,7 @@ public class ZombieAI : MonoBehaviour
         if (other.gameObject.tag == "player")
         {
             target = other.gameObject.GetComponent<PlayerStats>();
-            hearArea.radius = sightRadiusWithTarget;
+            hearArea.radius = hearRadiusWithTarget;
         }
     }
 
