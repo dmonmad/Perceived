@@ -16,7 +16,7 @@ public class ZombieAI : MonoBehaviour
     [Header("Detection variables")]
 
     public SphereCollider hearArea;
-    public float sightRadius;
+    public float hearRadius;
     public float hearRadiusWithTarget;
     public float noisetrigger;
     public float sightDistance;
@@ -44,7 +44,7 @@ public class ZombieAI : MonoBehaviour
         isAttacking = false;
         playerlastpos = Vector3.zero;
         rb = GetComponent<Rigidbody>();
-        hearArea.radius = sightRadius;
+        hearArea.radius = hearRadius;
         anim = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
     }
@@ -59,62 +59,116 @@ public class ZombieAI : MonoBehaviour
                 return;
             }
 
-            if (!isAttacking)
+            //if (!isAttacking)
+            //{
+            //    if (target)
+            //    {
+
+            //        float distance = Vector3.Distance(target.transform.position, transform.position);
+
+            //        if (distance < sightDistance)
+            //        {
+            //            if (CheckIfBehindObject())
+            //            {
+            //                playerlastpos = target.transform.position;
+            //                agent.SetDestination(target.transform.position);
+            //                target = null;
+            //            }
+            //            else
+            //            {
+            //                Debug.Log("SEEKING PLAYER");
+            //                playerlastpos = target.transform.position;
+            //                agent.SetDestination(target.transform.position);
+            //            }
+
+            //        }
+
+            //        if (distance > sightDistance)
+            //        {
+            //            Debug.LogWarning("TARGET IS OUT. TARGET NULL");
+            //            target = null;
+
+            //        }
+            //    }
+            //    else if (!target && playerlastpos != Vector3.zero)
+            //    {
+            //        //moveTowardsLastPos(playerlastpos);
+            //    }
+            //    else
+            //    {
+            //        if (anim.GetBool("isWalking"))
+            //        {
+            //            anim.SetBool("isWalking", false);
+            //        }
+            //    }
+            //}
+
+            if (target)
             {
-                if (target)
+
+                playerlastpos = target.transform.position;
+
+
+                if (!isAttacking)
                 {
-
-                    float distance = Vector3.Distance(target.transform.position, transform.position);
-
-                    if (distance < sightDistance)
+                    if (isTargetBehindObject())
                     {
-                        if (!CheckIfBehindObject())
-                        {
-                            Debug.Log("SEEKING PLAYER");
-                            playerlastpos = target.transform.position;
-                            agent.SetDestination(target.transform.position);
-                        }
-                        else
-                        {
-                            playerlastpos = target.transform.position;
-                            agent.SetDestination(target.transform.position);
-                            target = null;
-                        }
+                        target = null;
+                        GoToLastPosition();
+                    }
+                    else
+                    {
+                        SeekPlayer();
                         
                     }
-
-                    if (distance > sightDistance)
-                    {
-                        Debug.LogWarning("TARGET IS OUT. TARGET NULL");
-                        target = null;
-
-                    }
-                }
-                else if (!target && playerlastpos != Vector3.zero)
-                {
-                    //moveTowardsLastPos(playerlastpos);
                 }
                 else
                 {
-                    if (anim.GetBool("isWalking"))
-                    {
-                        anim.SetBool("isWalking", false);
-                    }
+
                 }
+
             }
+
+
         }
     }
 
-    private bool CheckIfBehindObject()
+    private void GoToLastPosition()
+    {
+        if(playerlastpos != null)
+        {
+            agent.SetDestination(playerlastpos);
+        }
+
+
+    }
+
+    private void SeekPlayer()
+    {
+
+        agent.SetDestination(target.transform.position);
+
+        if (agent.isStopped && Vector3.Distance(transform.position, target.transform.position) <= agent.stoppingDistance)
+        {
+            Attack();
+        }
+
+    }
+
+    private bool isTargetBehindObject()
     {
         bool targetBehindObject = false;
 
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.forward * sightDistance, out hit, sightDistance, PlayerMask))
+        Debug.DrawRay(transform.position, (target.transform.position - transform.position));
+
+        if (Physics.Raycast(transform.position, (target.transform.position - transform.position), out hit, sightDistance))
         {
-            if (hit.collider.gameObject.tag != "zombie" || hit.collider.gameObject.tag != "player")
+            Debug.Log("HITTING SOMETHING" + hit.collider.gameObject.name);
+            if (hit.collider.gameObject.tag != "player" && hit.collider.gameObject.tag != "zombie")
             {
+                Debug.Log("Player está detrás de " + hit.collider.gameObject.name);
                 targetBehindObject = true;
             }
         }
@@ -123,6 +177,7 @@ public class ZombieAI : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (!isAlive)
         {
             return;
@@ -132,6 +187,23 @@ public class ZombieAI : MonoBehaviour
         {
             target = other.gameObject.GetComponent<PlayerStats>();
             hearArea.radius = hearRadiusWithTarget;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!isAlive)
+        {
+            return;
+        }
+
+        if(other.gameObject.tag == "player")
+        {
+            if(target != null)
+            {
+                target = null;
+                hearArea.radius = hearRadius; 
+            }
         }
     }
 

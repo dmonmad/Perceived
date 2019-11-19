@@ -317,6 +317,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnderWaterCurtainGeom
       objectReference: {fileID: 0}
+    - target: {fileID: 1648640012831910, guid: 1ab0847a8e46b4c4fa728256231f88eb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4720579618361426, guid: 1ab0847a8e46b4c4fa728256231f88eb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -567,7 +571,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &762060683
 Transform:
   m_ObjectHideFlags: 0
@@ -605,7 +609,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &931767811
 Transform:
   m_ObjectHideFlags: 0
@@ -1613,6 +1617,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnderWaterMeniscus
       objectReference: {fileID: 0}
+    - target: {fileID: 1040961582426892, guid: 6d79ad5f5edb537448c2c13e54ffac88, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4478995129147352, guid: 6d79ad5f5edb537448c2c13e54ffac88, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2077,6 +2085,7 @@ GameObject:
   - component: {fileID: 576658274610780953}
   - component: {fileID: 576658274610780952}
   - component: {fileID: 576658274610780956}
+  - component: {fileID: 576658274610780954}
   m_Layer: 21
   m_Name: Player
   m_TagString: player
@@ -2131,6 +2140,19 @@ MonoBehaviour:
   zombieLayer:
     serializedVersion: 2
     m_Bits: 8388608
+--- !u!65 &576658274610780954
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576658274610780951}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.85, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &576658274610780955
 Transform:
   m_ObjectHideFlags: 0
@@ -3514,7 +3536,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5353426982765639113}
   m_LocalRotation: {x: 0, y: -0.96102077, z: 0, w: 0.2764762}
-  m_LocalPosition: {x: 627.34, y: 102.13, z: 595.51}
+  m_LocalPosition: {x: 612.3, y: 102.13, z: 595.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5353426982406503464}
@@ -3549,8 +3571,8 @@ MonoBehaviour:
   isAlive: 0
   isAttacking: 0
   hearArea: {fileID: 5353426982765639110}
-  sightRadius: 10
-  hearRadiusWithTarget: 0
+  hearRadius: 15
+  hearRadiusWithTarget: 30
   noisetrigger: 10
   sightDistance: 20.5
   PlayerMask:
