@@ -103,6 +103,8 @@ public class ZombieAI : MonoBehaviour
             //    }
             //}
 
+
+
             if (target)
             {
 
@@ -114,12 +116,12 @@ public class ZombieAI : MonoBehaviour
                     if (isTargetBehindObject())
                     {
                         target = null;
+                        hearArea.radius = hearRadius;
                         GoToLastPosition();
                     }
                     else
                     {
                         SeekPlayer();
-                        
                     }
                 }
                 else
@@ -127,6 +129,11 @@ public class ZombieAI : MonoBehaviour
 
                 }
 
+            }
+            else
+            {
+                agent.isStopped = true;
+                agent.ResetPath();
             }
 
 
