@@ -105,7 +105,7 @@ public class ZombieAI : MonoBehaviour
 
 
 
-            if (target)
+            if (target && !isTargetBehindObject())
             {
 
                 playerlastpos = target.transform.position;
@@ -113,27 +113,28 @@ public class ZombieAI : MonoBehaviour
 
                 if (!isAttacking)
                 {
-                    if (isTargetBehindObject())
-                    {
-                        target = null;
-                        hearArea.radius = hearRadius;
-                        GoToLastPosition();
-                    }
-                    else
-                    {
-                        SeekPlayer();
-                    }
-                }
-                else
-                {
+                    SeekPlayer();
 
                 }
 
             }
-            else
+            else if(target && isTargetBehindObject())
             {
-                agent.isStopped = true;
-                agent.ResetPath();
+                target = null;
+                hearArea.radius = hearRadius;
+                GoToLastPosition();
+            }
+            else if(!target)
+            {
+                if (playerlastpos != Vector3.zero)
+                {
+                    if (Vector3.Distance(playerlastpos, transform.position) <= agent.stoppingDistance)
+                    {
+                        playerlastpos = Vector3.zero;
+                        agent.isStopped = true;
+                        agent.ResetPath();
+                    }
+                }
             }
 
 
@@ -145,6 +146,7 @@ public class ZombieAI : MonoBehaviour
         if(playerlastpos != null)
         {
             agent.SetDestination(playerlastpos);
+
         }
 
 
