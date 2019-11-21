@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
     public float fuerzaSalto;
     bool isGrounded;
 
+
+    [Header("Interaction Settings")]
+    public int noise;
     public LayerMask zombieLayer;
 
     PlayerStats ps;
@@ -73,6 +76,18 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            velocidad = velocidad / 2;
+            ps.noise = ps.baseNoise / 2;
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            velocidad = velocidadbase;
+            ps.noise = ps.baseNoise;
         }
 
         float x = Input.GetAxis("Horizontal");

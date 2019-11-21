@@ -22,12 +22,12 @@ public class ZombieAI : MonoBehaviour
     public float sightDistance;
     public LayerMask PlayerMask;
 
-
     [Header("Zombie Variables")]
     public PlayerStats target;
     private Rigidbody rb;
     public float zombieSpeed;
     public float rotationSpeed;
+    public float attackRange;
 
     [Header("Movement Variables")]
     NavMeshAgent agent;
@@ -113,6 +113,8 @@ public class ZombieAI : MonoBehaviour
 
                 if (!isAttacking)
                 {
+                    anim.SetBool("isAttacking", false);
+                    anim.SetBool("isWalking", true);
                     SeekPlayer();
 
                 }
@@ -121,18 +123,19 @@ public class ZombieAI : MonoBehaviour
             else if(target && isTargetBehindObject())
             {
                 target = null;
-                hearArea.radius = hearRadius;
+                
                 GoToLastPosition();
             }
             else if(!target)
             {
                 if (playerlastpos != Vector3.zero)
                 {
-                    if (Vector3.Distance(playerlastpos, transform.position) <= agent.stoppingDistance)
+                    if (Vector3.Distance(transform.position, playerlastpos) <= agent.stoppingDistance)
                     {
-                        playerlastpos = Vector3.zero;
                         agent.isStopped = true;
                         agent.ResetPath();
+                        hearArea.radius = hearRadius;
+                        playerlastpos = Vector3.zero;
                     }
                 }
             }
@@ -157,7 +160,7 @@ public class ZombieAI : MonoBehaviour
 
         agent.SetDestination(target.transform.position);
 
-        if (agent.isStopped && Vector3.Distance(transform.position, target.transform.position) <= agent.stoppingDistance)
+        if (Vector3.Distance(transform.position, target.transform.position) <= agent.stoppingDistance)
         {
             Attack();
         }
@@ -174,7 +177,6 @@ public class ZombieAI : MonoBehaviour
 
         if (Physics.Raycast(transform.position, (target.transform.position - transform.position), out hit, sightDistance))
         {
-            Debug.Log("HITTING SOMETHING" + hit.collider.gameObject.name);
             if (hit.collider.gameObject.tag != "player" && hit.collider.gameObject.tag != "zombie")
             {
                 Debug.Log("Player está detrás de " + hit.collider.gameObject.name);
@@ -194,9 +196,18 @@ public class ZombieAI : MonoBehaviour
 
         if (other.gameObject.tag == "player")
         {
-            target = other.gameObject.GetComponent<PlayerStats>();
-            hearArea.radius = hearRadiusWithTarget;
+            if (other.GetComponent<PlayerStats>().noise >= noisetrigger)
+            {
+                target = other.gameObject.GetComponent<PlayerStats>();
+                hearArea.radius = hearRadiusWithTarget;
+            }
+            
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        
     }
 
     private void OnTriggerExit(Collider other)
@@ -269,6 +280,7 @@ public class ZombieAI : MonoBehaviour
 
     public void Attack()
     {
+        Debug.Log("Attacking");
         isAttacking = true;
         anim.SetBool("isWalking", false);
         anim.SetBool("isAttacking", true);
@@ -276,19 +288,24 @@ public class ZombieAI : MonoBehaviour
 
     public void AnimAttack()
     {
+        Debug.Log("AnimAttack");
         RaycastHit hit;
 
-        if (Physics.Raycast(gameObject.transform.position, gameObject.transform.TransformDirection(Vector3.forward), out hit, 2f))
+        Debug.DrawRay(gameObject.transform.position, gameObject.transform.TransformDirection(Vector3.forward));
+
+        if (Physics.Raycast(gameObject.transform.position, gameObject.transform.TransformDirection(Vector3.forward), out hit, attackRange))
         {
             Debug.Log("ZOMBIE HIT TAG:"+hit.transform.gameObject.tag);
 
-            if (hit.collider.GetType() == typeof(CapsuleCollider) && hit.transform.gameObject.tag.Equals("player"))
+            if (hit.collider.GetType() == typeof(BoxCollider) && hit.transform.gameObject.tag.Equals("player"))
             {
                 Debug.Log("HITTING PLAYER");
                 hit.transform.gameObject.GetComponent<PlayerStats>().GetDamage(zs.attackDamage);
+                
             }
 
         }
+        isAttacking = false;
     }
 
     private IEnumerator SetActive()

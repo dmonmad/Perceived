@@ -2110,6 +2110,8 @@ MonoBehaviour:
   energy: 0
   hunger: 0
   attackDamage: 200
+  baseNoise: 50
+  noise: 50
 --- !u!114 &576658274610780953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2137,6 +2139,7 @@ MonoBehaviour:
     m_Bits: 16384
   groundDistance: 0
   fuerzaSalto: 3
+  noise: 0
   zombieLayer:
     serializedVersion: 2
     m_Bits: 8388608
@@ -3526,7 +3529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zombiehealth: 500
   damageMultiplier: 1
-  attackDamage: 0
+  attackDamage: 30
   aizomb: {fileID: 0}
 --- !u!4 &5353426982765639109
 Transform:
@@ -3573,7 +3576,7 @@ MonoBehaviour:
   hearArea: {fileID: 5353426982765639110}
   hearRadius: 15
   hearRadiusWithTarget: 30
-  noisetrigger: 10
+  noisetrigger: 50
   sightDistance: 20.5
   PlayerMask:
     serializedVersion: 2
@@ -3581,6 +3584,7 @@ MonoBehaviour:
   target: {fileID: 0}
   zombieSpeed: 1
   rotationSpeed: 3
+  attackRange: 2
 --- !u!1 &5353426982765639113
 GameObject:
   m_ObjectHideFlags: 0
