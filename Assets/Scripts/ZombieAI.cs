@@ -21,6 +21,7 @@ public class ZombieAI : MonoBehaviour
     public float noisetrigger;
     public float sightDistance;
     public LayerMask PlayerMask;
+    public bool isDoingNoise;
 
     [Header("Zombie Variables")]
     public PlayerStats target;
@@ -47,6 +48,7 @@ public class ZombieAI : MonoBehaviour
         hearArea.radius = hearRadius;
         anim = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        isDoingNoise = false;
     }
 
     // Update is called once per frame
@@ -57,6 +59,11 @@ public class ZombieAI : MonoBehaviour
             if (!isAlive)
             {
                 return;
+            }
+
+            if (target && isDoingNoise)
+            {
+                agent.SetDestination(target.transform.position);
             }
 
             //if (!isAttacking)
@@ -105,54 +112,52 @@ public class ZombieAI : MonoBehaviour
 
 
 
-            if (target && !isTargetBehindObject())
-            {
+        //    if (target && !isTargetBehindObject())
+        //    {
 
-                playerlastpos = target.transform.position;
+        //        playerlastpos = target.transform.position;
 
 
-                if (!isAttacking)
-                {
-                    anim.SetBool("isAttacking", false);
-                    anim.SetBool("isWalking", true);
-                    SeekPlayer();
+        //        if (!isAttacking)
+        //        {
+        //            anim.SetBool("isAttacking", false);
+        //            anim.SetBool("isWalking", true);
+        //            SeekPlayer();
 
-                }
+        //        }
 
-            }
-            else if(target && isTargetBehindObject())
-            {
-                target = null;
-                
-                GoToLastPosition();
-            }
-            else if(!target)
-            {
-                if (playerlastpos != Vector3.zero)
-                {
-                    if (Vector3.Distance(transform.position, playerlastpos) <= agent.stoppingDistance)
-                    {
-                        agent.isStopped = true;
-                        agent.ResetPath();
-                        hearArea.radius = hearRadius;
-                        playerlastpos = Vector3.zero;
-                    }
-                }
-            }
+        //    }
+        //    else if(target && isTargetBehindObject())
+        //    {
+
+        //        GoToPosition(target.transform.position);
+        //        target = null;
+        //        hearArea.radius = hearRadius;
+
+        //    }
+        //    else if(!target)
+        //    {
+        //        if (playerlastpos != Vector3.zero)
+        //        {
+        //            if (Vector3.Distance(transform.position, playerlastpos) <= agent.stoppingDistance)
+        //            {
+        //                agent.isStopped = true;
+        //                agent.ResetPath();
+        //                hearArea.radius = hearRadius;
+        //                playerlastpos = Vector3.zero;
+        //            }
+        //        }
+        //    }
 
 
         }
     }
 
-    private void GoToLastPosition()
+    private void GoToPosition(Vector3 position)
     {
-        if(playerlastpos != null)
-        {
-            agent.SetDestination(playerlastpos);
-
-        }
-
-
+        
+            agent.SetDestination(position);
+    
     }
 
     private void SeekPlayer()
@@ -207,6 +212,12 @@ public class ZombieAI : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+
+        if (other.gameObject == target && other.GetComponent<PlayerStats>().noise >= noisetrigger){
+
+            isDoingNoise = true;
+        }
+
         
     }
 
@@ -222,7 +233,8 @@ public class ZombieAI : MonoBehaviour
             if(target != null)
             {
                 target = null;
-                hearArea.radius = hearRadius; 
+                hearArea.radius = hearRadius;
+                isDoingNoise = false;
             }
         }
     }
