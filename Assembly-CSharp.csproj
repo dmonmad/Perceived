@@ -158,10 +158,12 @@
     <Compile Include="Assets\Easy FPS\Scripts\PlayerMovementScript.cs" />
     <Compile Include="Assets\MoveMotionPack\SampleScene\Scripts\PlayManager.cs" />
     <Compile Include="Assets\Scripts\AttackHandler.cs" />
-    <Compile Include="Assets\Scripts\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\PlayerStats.cs" />
-    <Compile Include="Assets\Scripts\ZombieAI.cs" />
-    <Compile Include="Assets\Scripts\ZombieStats.cs" />
+    <Compile Include="Assets\Scripts\GameFlow.cs" />
+    <Compile Include="Assets\Scripts\Player\InventoryManager.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
+    <Compile Include="Assets\Scripts\Zombie\ZombieAI.cs" />
+    <Compile Include="Assets\Scripts\Zombie\ZombieStats.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />

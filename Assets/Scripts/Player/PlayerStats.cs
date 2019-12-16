@@ -2,24 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class PlayerStats : MonoBehaviour
 {
-    public int health, thirst, hunger, energy;
-    public int maxHealth, maxThirst, maxHunger, maxEnergy;
-    public int maxFoodSaturation, maxThirstSaturation;
-    public int hungerRate, thirstRate;
-    public int foodSaturation, thirstSaturation;
+    public float health, thirst, hunger, energy;
+    public float maxHealth, maxThirst, maxHunger, maxEnergy;
+    public float maxFoodSaturation, maxThirstSaturation;
+    public float hungerRate, thirstRate;
+    public float foodSaturation, thirstSaturation;
     public float baseAttackDamage, attackDamage;
     public int baseNoise, noise;
     public TextMeshProUGUI healthText, thirstText, hungerText;
 
-
+    Boolean isDead;
     PlayerController playerc;
 
     // Start is called before the first frame update
     void Start()
     {
+        isDead = false;
         noise = baseNoise;
         playerc = GetComponent<PlayerController>();
         health = maxHealth;
@@ -34,16 +36,22 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        thirst -= (int)Time.deltaTime * thirstRate;
-        hunger -= (int)Time.deltaTime * hungerRate;
-        updateThirst();
-        updateHunger();
+        if (!isDead)
+        {
+            thirst -= Time.deltaTime * thirstRate;
+            hunger -= Time.deltaTime * hungerRate;
+            updateThirst();
+            updateHunger();
+            updateHealth();
+        }
+        
 
 
     }
 
-    public void GetDamage(int damage)
+    
+
+    public void GetDamage(float damage)
     {
 
         Debug.Log("PLAYER / GET DAMAGE " + damage);
@@ -60,14 +68,25 @@ public class PlayerStats : MonoBehaviour
 
     }
 
-    public void updateThirst()
+    private void updateHealth()
+    {
+        healthText.SetText(health.ToString());
+    }
+
+    private void updateThirst()
     {
         thirstText.SetText(thirst.ToString());
     }
 
-    public void updateHunger()
+    private void updateHunger()
     {
         hungerText.SetText(hunger.ToString());
+    }
+
+    private void killPlayer()
+    {
+        isDead = true;
+        playerc.Die();
     }
 
     

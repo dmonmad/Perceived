@@ -7,7 +7,7 @@ public class ZombieStats : MonoBehaviour
 
     public float zombiehealth;
     public float damageMultiplier;
-    public int attackDamage;
+    public float attackDamage;
     public ZombieAI aizomb;
 
     void Start()

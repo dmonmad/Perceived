@@ -3209,18 +3209,18 @@ MonoBehaviour:
   thirst: 0
   hunger: 0
   energy: 0
-  maxHealth: 0
-  maxThirst: 0
-  maxHunger: 0
-  maxEnergy: 0
-  maxFoodSaturation: 0
-  maxThirstSaturation: 0
-  hungerRate: 0
-  thirstRate: 0
+  maxHealth: 100
+  maxThirst: 100
+  maxHunger: 100
+  maxEnergy: 100
+  maxFoodSaturation: 50
+  maxThirstSaturation: 50
+  hungerRate: 0.03
+  thirstRate: 0.1
   foodSaturation: 0
   thirstSaturation: 0
-  baseAttackDamage: 0
-  attackDamage: 200
+  baseAttackDamage: 200
+  attackDamage: 0
   baseNoise: 50
   noise: 0
   healthText: {fileID: 883653474}
