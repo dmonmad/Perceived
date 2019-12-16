@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    public float maxHealth;
-    public float health;
-    public float energy;
-    public float hunger;
-    public float attackDamage;
-    public int baseNoise;
-    public int noise;
+    public float maxHealth, health;
+    public float maxEnergy, energy;
+    public float maxHunger, hunger;
+    public float maxFoodSaturation, foodSaturation;
+    public float maxThirstSaturation, thirstSaturation;
+    public float baseAttackDamage, attackDamage;
+    public float hungerRate, thirstRate;
+    public int baseNoise, noise;
 
     PlayerController playerc;
 
@@ -20,6 +21,11 @@ public class PlayerStats : MonoBehaviour
         noise = baseNoise;
         playerc = GetComponent<PlayerController>();
         health = maxHealth;
+        energy = maxEnergy;
+        hunger = maxHunger;
+        foodSaturation = maxFoodSaturation;
+        thirstSaturation = maxThirstSaturation;
+        attackDamage = baseAttackDamage;
     }
 
     // Update is called once per frame
