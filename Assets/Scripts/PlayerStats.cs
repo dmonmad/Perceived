@@ -1,17 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerStats : MonoBehaviour
 {
-    public float maxHealth, health;
-    public float maxEnergy, energy;
-    public float maxHunger, hunger;
-    public float maxFoodSaturation, foodSaturation;
-    public float maxThirstSaturation, thirstSaturation;
+    public int health, thirst, hunger, energy;
+    public int maxHealth, maxThirst, maxHunger, maxEnergy;
+    public int maxFoodSaturation, maxThirstSaturation;
+    public int hungerRate, thirstRate;
+    public int foodSaturation, thirstSaturation;
     public float baseAttackDamage, attackDamage;
-    public float hungerRate, thirstRate;
     public int baseNoise, noise;
+    public TextMeshProUGUI healthText, thirstText, hungerText;
+
 
     PlayerController playerc;
 
@@ -23,6 +25,7 @@ public class PlayerStats : MonoBehaviour
         health = maxHealth;
         energy = maxEnergy;
         hunger = maxHunger;
+        thirst = maxThirst;
         foodSaturation = maxFoodSaturation;
         thirstSaturation = maxThirstSaturation;
         attackDamage = baseAttackDamage;
@@ -31,10 +34,16 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        thirst -= (int)Time.deltaTime * thirstRate;
+        hunger -= (int)Time.deltaTime * hungerRate;
+        updateThirst();
+        updateHunger();
+
+
     }
 
-    public void GetDamage(float damage)
+    public void GetDamage(int damage)
     {
 
         Debug.Log("PLAYER / GET DAMAGE " + damage);
@@ -49,6 +58,16 @@ public class PlayerStats : MonoBehaviour
         }
 
 
+    }
+
+    public void updateThirst()
+    {
+        thirstText.SetText(thirst.ToString());
+    }
+
+    public void updateHunger()
+    {
+        hungerText.SetText(hunger.ToString());
     }
 
     
