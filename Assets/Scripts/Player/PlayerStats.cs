@@ -15,7 +15,7 @@ public class PlayerStats : MonoBehaviour
     public int baseNoise, noise;
     public TextMeshProUGUI healthText, thirstText, hungerText, energyText;
 
-    Boolean isDead;
+    bool isDead;
     PlayerController playerc;
 
     // Start is called before the first frame update
@@ -94,6 +94,28 @@ public class PlayerStats : MonoBehaviour
         playerc.Die();
     }
 
-    
+    internal void addThirst(float quantity)
+    {
+        if (!isDead)
+        {
+            
+            if(thirst + quantity > maxThirst)
+            {
+                thirst = maxThirst;
 
+                if(thirstSaturation + ((thirst + quantity) - maxThirst) > maxThirstSaturation)
+                {
+                    thirstSaturation = maxThirstSaturation;
+                }
+                else
+                {
+                    thirstSaturation += (thirst + quantity) - maxThirst;
+                }
+            }
+            else
+            {
+                thirst += quantity;
+            }
+        }
+    }
 }

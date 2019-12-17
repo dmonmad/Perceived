@@ -160,7 +160,10 @@ public class PlayerController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    
+    public void Drink(float quantity)
+    {
+        ps.addThirst(quantity);
+    }
 
 
 }
