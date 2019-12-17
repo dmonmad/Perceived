@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public enum ItemType {none, weapon, ammo, consumable }
 
-public class Item : MonoBehaviour
+public class Item2 : MonoBehaviour
 {
     [System.Serializable]
     public class OnUseEvent : UnityEvent { }
@@ -25,7 +25,7 @@ public class Item : MonoBehaviour
     [SerializeField]
     public OnPickupEvent onPickupEvent;
 
-    public Item(int id, string title, string description, ItemType itemType)
+    public Item2(int id, string title, string description, ItemType itemType)
     {
         this.id = id;
         this.title = title;
@@ -34,7 +34,7 @@ public class Item : MonoBehaviour
         this.type = itemType;
     }
 
-    public Item(Item item)
+    public Item2(Item2 item)
     {
         this.id = item.id;
         this.title = item.title;

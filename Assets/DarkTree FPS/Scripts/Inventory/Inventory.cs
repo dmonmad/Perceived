@@ -13,7 +13,7 @@ namespace DarkTreeFPS
         [System.Serializable]
         public class OnAddItem : UnityEvent { }
 
-        public List<Item> characterItems = new List<Item>();
+        public List<Item2> characterItems = new List<Item2>();
         public UIInventory inventoryUI;
 
         public bool debug = true;
@@ -21,7 +21,7 @@ namespace DarkTreeFPS
         public OnAddItem onAddItem;
 
         //Method to add item to inventory
-        public void GiveItem(Item item)
+        public void GiveItem(Item2 item)
         {
             if (CheckFreeSpace() == false)
             {
@@ -54,7 +54,7 @@ namespace DarkTreeFPS
         }
 
         //Method to check if item reference exist in inventory. Used by remove method to check if we delete item that is really exist
-        public Item CheckForItem(Item item)
+        public Item2 CheckForItem(Item2 item)
         {
             return characterItems.Find(x => item.GetHashCode() == x.GetHashCode());
         }
@@ -95,7 +95,7 @@ namespace DarkTreeFPS
         }
 
         //Remove item by item reference
-        public void RemoveItem(Item item, bool destroy)
+        public void RemoveItem(Item2 item, bool destroy)
         {
             var _item = CheckForItem(item);
 
@@ -120,7 +120,7 @@ namespace DarkTreeFPS
             }
         }
 
-        public void UseItem(Item item, bool closeInventory)
+        public void UseItem(Item2 item, bool closeInventory)
         {
             item.onUseEvent.Invoke();
 

@@ -22,14 +22,14 @@ namespace DarkTreeFPS {
         public int pointsToAdd;
 
         private PlayerStats playerStats;
-        private Item item;
+        private Item2 item;
 
         UnityAction addHealth, addSatiety, addHydratation;
 
         private void Start()
         {
             playerStats = FindObjectOfType<PlayerStats>();
-            item = GetComponent<Item>();
+            item = GetComponent<Item2>();
 
             addHealth += AddHealth;
             addHydratation += AddHydratation;

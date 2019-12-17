@@ -11,7 +11,7 @@ namespace DarkTreeFPS
     public class UIItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [HideInInspector]
-        public Item item;
+        public Item2 item;
 
         private Image spriteImage;
         private UIItem selectedItem;
@@ -32,7 +32,7 @@ namespace DarkTreeFPS
             ammoText = GetComponentInChildren<Text>();
         }
 
-        public void UpdateItem(Item item)
+        public void UpdateItem(Item2 item)
         {
             this.item = item;
             if (this.item != null)
@@ -83,7 +83,7 @@ namespace DarkTreeFPS
 
                         if (selectedItem.item != null)
                         {
-                            Item clone = new Item(selectedItem.item);
+                            Item2 clone = new Item2(selectedItem.item);
                             selectedItem.UpdateItem(this.item);
                             UpdateItem(clone);
                         }

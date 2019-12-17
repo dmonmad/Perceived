@@ -13,7 +13,7 @@ public class Tooltip : MonoBehaviour
         tooltip = GetComponentInChildren<Text>();
     }
 
-    public void GenerateContent(Item item)
+    public void GenerateContent(Item2 item)
     {
         string tooltip = string.Format("{0}\n{1}\n", item.title, item.description);
         this.tooltip.text = tooltip;

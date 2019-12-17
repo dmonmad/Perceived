@@ -124,7 +124,7 @@
     <Compile Include="Assets\DarkTree FPS\Scripts\Inventory\Inventory.cs" />
     <Compile Include="Assets\DarkTree FPS\Scripts\Inventory\InventoryInteraction.cs" />
     <Compile Include="Assets\DarkTree FPS\Scripts\Inventory\InventoryManager.cs" />
-    <Compile Include="Assets\DarkTree FPS\Scripts\Inventory\Item.cs" />
+    <Compile Include="Assets\DarkTree FPS\Scripts\Inventory\Item2.cs" />
     <Compile Include="Assets\DarkTree FPS\Scripts\Inventory\Tooltip.cs" />
     <Compile Include="Assets\DarkTree FPS\Scripts\Inventory\UIInventory.cs" />
     <Compile Include="Assets\DarkTree FPS\Scripts\Inventory\UIItem.cs" />
@@ -159,9 +159,11 @@
     <Compile Include="Assets\MoveMotionPack\SampleScene\Scripts\PlayManager.cs" />
     <Compile Include="Assets\Scripts\AttackHandler.cs" />
     <Compile Include="Assets\Scripts\GameFlow.cs" />
-    <Compile Include="Assets\Scripts\Player\InventoryManager.cs" />
+    <Compile Include="Assets\Scripts\Items\Item.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
+    <Compile Include="Assets\Scripts\UI\InventoryManager.cs" />
+    <Compile Include="Assets\Scripts\UI\Slot.cs" />
     <Compile Include="Assets\Scripts\Zombie\ZombieAI.cs" />
     <Compile Include="Assets\Scripts\Zombie\ZombieStats.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />

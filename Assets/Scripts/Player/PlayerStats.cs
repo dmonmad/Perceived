@@ -13,7 +13,7 @@ public class PlayerStats : MonoBehaviour
     public float foodSaturation, thirstSaturation;
     public float baseAttackDamage, attackDamage;
     public int baseNoise, noise;
-    public TextMeshProUGUI healthText, thirstText, hungerText;
+    public TextMeshProUGUI healthText, thirstText, hungerText, energyText;
 
     Boolean isDead;
     PlayerController playerc;
@@ -81,6 +81,11 @@ public class PlayerStats : MonoBehaviour
     private void updateHunger()
     {
         hungerText.SetText(hunger.ToString());
+    }
+
+    private  void updateEnergy()
+    {
+        energyText.SetText(energy.ToString());
     }
 
     private void killPlayer()

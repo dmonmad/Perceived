@@ -942,9 +942,9 @@ namespace DarkTreeFPS
             return totalAmmo;
         }
 
-        public List<Item> GetAmmoItems()
+        public List<Item2> GetAmmoItems()
         {
-            var items = new List<Item>();
+            var items = new List<Item2>();
 
             foreach (var item in inventory.characterItems)
             {

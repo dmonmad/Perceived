@@ -49,12 +49,12 @@ namespace DarkTreeFPS
                     useCursor.SetActive(true);
                     
 
-                    if (use.GetComponent<Item>())
+                    if (use.GetComponent<Item2>())
                     {
-                        useText.text = use.GetComponent<Item>().title;
+                        useText.text = use.GetComponent<Item2>().title;
                             if (Input.GetKeyDown(null))
                             {
-                                inventory.GiveItem(use.GetComponent<Item>());
+                                inventory.GiveItem(use.GetComponent<Item2>());
                                 use = null;
                             }
                         

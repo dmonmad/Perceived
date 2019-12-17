@@ -17,7 +17,7 @@ namespace DarkTreeFPS
         public string neededAmmoName;
         public Inventory inventory;
 
-        public List<Item> ammoItems;
+        public List<Item2> ammoItems;
 
         private void Start()
         {

@@ -9,7 +9,7 @@ namespace DarkTreeFPS
 {
     public class InventoryInteraction : MonoBehaviour
     {
-        public Item item;
+        public Item2 item;
         public Inventory inventory;
         public Text infoText;
 

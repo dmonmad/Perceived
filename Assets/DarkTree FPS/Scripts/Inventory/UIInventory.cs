@@ -26,17 +26,17 @@ namespace DarkTreeFPS
             }
         }
 
-        public void UpdateSlot(int slot, Item item)
+        public void UpdateSlot(int slot, Item2 item)
         {
             UIItems[slot].UpdateItem(item);
         }
 
-        public void AddNewItem(Item item)
+        public void AddNewItem(Item2 item)
         {
             UpdateSlot(UIItems.FindIndex(i => i.item == null), item);
         }
 
-        public void RemoveItem(Item item)
+        public void RemoveItem(Item2 item)
         {
             UpdateSlot(UIItems.FindIndex(i => i.item == item), null);
         }

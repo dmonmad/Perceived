@@ -7,7 +7,7 @@ namespace DarkTreeFPS
 {
     public class UseGrenade : MonoBehaviour
     {
-        Item item;
+        Item2 item;
         WeaponManager weaponManager;
 
         UnityAction useGrenade;
@@ -18,7 +18,7 @@ namespace DarkTreeFPS
 
             useGrenade += UseGrenadeAction;
 
-            item = GetComponent<Item>();
+            item = GetComponent<Item2>();
 
             item.onUseEvent.AddListener(useGrenade);
         }
