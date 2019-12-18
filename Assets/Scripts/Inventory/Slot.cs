@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     public bool hovered;
     public bool empty;
@@ -18,7 +19,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     // Start is called before the first frame update
     void Start()
     {
-        
+        empty = true;
         hovered = false;
         player = GameObject.FindWithTag("player");
     }
@@ -26,17 +27,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     // Update is called once per frame
     void Update()
     {
-        if (item)
-        {
-            empty = false;
-
-            itemIcon = item.GetComponent<Item>().icon;
-            this.GetComponent<RawImage>().texture = itemIcon;
-        }
-        else
-        {
-            empty = true;
-        }
+        
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -60,9 +51,27 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             if(thisItem.type == "water")
             {
                 player.GetComponent<PlayerController>().Drink(thisItem.quantitySatisfied);
+                Destroy(item);
+                updateSlot();
             }
         }
     }
 
+    internal void updateSlot()
+    {
+        if (item)
+        {
 
+            empty = false;
+
+            itemIcon = item.GetComponent<Item>().icon;
+
+            this.GetComponent<RawImage>().texture = itemIcon;
+        }
+        else
+        {
+            empty = true;
+            this.GetComponent<RawImage>().texture = null;
+        }
+    }
 }
