@@ -73,16 +73,12 @@ public class InventoryManager : MonoBehaviour
             if (slot[i].GetComponent<Slot>().empty)
             {
                 Debug.Log("ENTRA EMPTY");
-                slot[i].GetComponent<Slot>().item = item;
-                slot[i].GetComponent<Slot>().itemIcon = item.GetComponent<Item>().icon;
+                slot[i].GetComponent<Slot>().setItem(item, item.GetComponent<Item>().icon);
 
                 item.transform.parent = itemManager.transform;
-
                 item.transform.position = itemManager.transform.position;
 
                 item.SetActive(false);
-
-                slot[i].GetComponent<Slot>().updateSlot();
 
 
                 break;

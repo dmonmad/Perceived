@@ -12,6 +12,10 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public GameObject item;
     public Texture itemIcon;
+    public Texture defaultIcon;
+
+    private bool itemIsDeleted;
+
 
     private GameObject player;
 
@@ -19,9 +23,12 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     // Start is called before the first frame update
     void Start()
     {
+        itemIsDeleted = false;
         empty = true;
         hovered = false;
+        updateSlot();
         player = GameObject.FindWithTag("player");
+
     }
 
     // Update is called once per frame
@@ -43,25 +50,28 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log("ONPOINTER");
         if (item)
         {
-            Item thisItem = item.GetComponent<Item>();
+            Debug.Log("ONPOINTER ITEM");
 
             //checking for item type
-            if(thisItem.type == "water")
+            if(item.GetComponent<Item>().type == "water")
             {
-                player.GetComponent<PlayerController>().Drink(thisItem.quantitySatisfied);
+                player.GetComponent<PlayerController>().Drink(item.GetComponent<Item>().quantitySatisfied);
                 Destroy(item);
+                Debug.Log("UPDATE SLOT CALL##");
+                itemIsDeleted = true;
                 updateSlot();
             }
         }
     }
 
-    internal void updateSlot()
+    private void updateSlot()
     {
-        if (item)
+        if (item && !itemIsDeleted)
         {
-
+            Debug.Log("UPDATE SLOT NORMAL");
             empty = false;
 
             itemIcon = item.GetComponent<Item>().icon;
@@ -70,8 +80,18 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         }
         else
         {
+            Debug.Log("UPDATE SLOT ELSE");
             empty = true;
-            this.GetComponent<RawImage>().texture = null;
+            itemIcon = null;
+            this.GetComponent<RawImage>().texture = defaultIcon;
         }
+    }
+
+    public void setItem(GameObject item, Texture icon)
+    {
+        this.item = item;
+        this.itemIcon = icon;
+        itemIsDeleted = false;
+        updateSlot();
     }
 }
