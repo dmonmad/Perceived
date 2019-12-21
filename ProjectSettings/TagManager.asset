@@ -21,6 +21,7 @@ TagManager:
   - Weapon
   - SecondCamera
   - BulletSpawn
+  - Ground
   layers:
   - Default
   - TransparentFX
