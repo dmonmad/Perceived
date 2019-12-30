@@ -33,11 +33,11 @@ class WaterEditorUtility
 	
 	public static Material LocateValidWaterMaterial(Transform parent)
 	{
-		if(parent.GetComponent<Renderer>() && parent.GetComponent<Renderer>().sharedMaterial)
+		if (parent.GetComponent<Renderer>() && parent.GetComponent<Renderer>().sharedMaterial)
 			return parent.GetComponent<Renderer>().sharedMaterial;
 		foreach( Transform t in parent)
 		{
-			if(t.GetComponent<Renderer>() && t.GetComponent<Renderer>().sharedMaterial)
+			if (t.GetComponent<Renderer>() && t.GetComponent<Renderer>().sharedMaterial)
 				return t.GetComponent<Renderer>().sharedMaterial;
 		}
 		return null;
@@ -49,16 +49,16 @@ class WaterEditorUtility
 		curve = EditorGUILayout.CurveField(new GUIContent (name), curve, color, new Rect (0.0f,0.0f,1.0f,1.0f));
 
 		//if (GUI.changed) {
-		//	AnimationCurveChanged(((WaterBase)serObj.targetObject).sharedMaterial, curve);
+			//AnimationCurveChanged(((WaterBase)serObj.targetObject).sharedMaterial, curve);
 			//((WaterBase)serObj.targetObject).gameObject.SendMessage ("AnimationCurveChanged", SendMessageOptions.DontRequireReceiver);
-	   //}
+		//}
 	}
 	/*
 	public static void AnimationCurveChanged(Material sharedMaterial, AnimationCurve fresnelCurve)
 	{
 		Debug.Log("AnimationCurveChanged");
 		Texture2D fresnel = (Texture2D)sharedMaterial.GetTexture("_Fresnel");
-		if(!fresnel)
+		if (!fresnel)
 			fresnel = new Texture2D(256,1);
 			
 		for (int i = 0; i < 256; i++)
