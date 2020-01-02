@@ -36,10 +36,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _AO: 3.6624568
-    - _BaseLight: 0.0783582
+    - _AO: 10
+    - _BaseLight: 0.521
     - _Bias: 1
-    - _Cutoff: 0.61969
+    - _Cutoff: 0.564
     - _Occlusion: 20
     - _Shininess: 5.240126
     - _SquashAmount: 1
@@ -47,6 +47,8 @@ Material:
     - _Color: {r: 0.76119405, g: 0.76119405, b: 0.76119405, a: 1}
     - _Scale: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.47014928, g: 0.47014928, b: 0.47014928, a: 0}
+    - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TreeInstanceScale: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1002 &2100001
 EditorExtensionImpl:
   serializedVersion: 6
