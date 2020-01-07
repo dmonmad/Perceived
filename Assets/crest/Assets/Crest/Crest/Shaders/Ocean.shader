@@ -239,7 +239,7 @@ Shader "Crest/Ocean"
 				float4 positionCS : SV_POSITION;
 				half4 flow_shadow : TEXCOORD1;
 				half4 foam_screenPosXYW : TEXCOORD4;
-				half4 lodAlpha_worldXZUndisplaced_oceanDepth : TEXCOORD5;
+				float4 lodAlpha_worldXZUndisplaced_oceanDepth : TEXCOORD5;
 				float3 worldPos : TEXCOORD7;
 				#if _DEBUGVISUALISESHAPESAMPLE_ON
 				half3 debugtint : TEXCOORD8;
@@ -253,8 +253,8 @@ Shader "Crest/Ocean"
 
 			float _CrestTime;
 
-			// MeshScaleLerp, FarNormalsWeight, LODIndex (debug), lod count
-			float4 _InstanceData;
+			// MeshScaleLerp, FarNormalsWeight, LODIndex (debug)
+			float3 _InstanceData;
 
 			// Argument name is v because some macros like COMPUTE_EYEDEPTH require it.
 			Varyings Vert(Attributes v)
@@ -465,7 +465,16 @@ Shader "Crest/Ocean"
 				half3 col = OceanEmission(view, n_pixel, lightDir, input.grabPos, pixelZ, uvDepth, sceneZ, sceneZ01, bubbleCol, _Normals, _CameraDepthTexture, underwater, scatterCol);
 
 				// Light that reflects off water surface
+
+				// Soften reflection at intersections with objects/surfaces
+				#if _TRANSPARENCY_ON
 				float reflAlpha = saturate((sceneZ - pixelZ) / 0.2);
+				#else
+				// This addresses the problem where screenspace depth doesnt work in VR, and so neither will this. In VR people currently
+				// disable transparency, so this will always be 1.0.
+				float reflAlpha = 1.0;
+				#endif
+				
 				#if _UNDERWATER_ON
 				if (underwater)
 				{
@@ -491,7 +500,7 @@ Shader "Crest/Ocean"
 				else
 				{
 					// underwater - do depth fog
-					col = lerp(col, scatterCol, 1. - exp(-_DepthFogDensity.xyz * pixelZ));
+					col = lerp(col, scatterCol, saturate(1. - exp(-_DepthFogDensity.xyz * pixelZ)));
 				}
 
 				#if _DEBUGVISUALISESHAPESAMPLE_ON

@@ -20,7 +20,6 @@ uniform half3 _SubSurfaceColour;
 uniform half _SubSurfaceBase;
 uniform half _SubSurfaceSun;
 uniform half _SubSurfaceSunFallOff;
-uniform half3 _SubSurfaceCrestColour;
 #endif // _SUBSURFACESCATTERING_ON
 
 #if _SUBSURFACESHALLOWCOLOUR_ON
@@ -66,15 +65,13 @@ half3 ScatterColour(
 		depth = CREST_OCEAN_DEPTH_BASELINE;
 		SampleSeaDepth(_LD_TexArray_SeaFloorDepth, uv_smallerLod, 1.0, depth);
 
-		// Huw: knocking this out for now as it seems to produce intense strobing when underwater.
 #if _SHADOWS_ON
 		const float2 samplePoint = i_cameraPos.xz;
 
-		const float sliceCount = _InstanceData.w;
 		// Pick lower res data for shadowing, helps to smooth out artifacts slightly
 		const float minSliceIndex = 4.0;
 		uint slice0, slice1; float lodAlpha;
-		PosToSliceIndices(samplePoint, sliceCount, _InstanceData.x, minSliceIndex, slice0, slice1, lodAlpha);
+		PosToSliceIndices(samplePoint, _InstanceData.x, minSliceIndex, slice0, slice1, lodAlpha);
 
 		float2 shadowSoftHard = 0.0;
 		// TODO - fix data type of slice index in WorldToUV - #343

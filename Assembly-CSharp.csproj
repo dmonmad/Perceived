@@ -62,61 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\BuildCommandBuffer.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Collision\CollProvider.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Collision\CollProviderCache.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Collision\CollProviderNull.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Collision\QueryBase.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Collision\QueryDisplacements.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Collision\QueryFlow.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Collision\SamplingHelpers.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Collision\VisualiseCollisionArea.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\GPUReadback\GPUReadbackBase.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\GPUReadback\GPUReadbackDisps.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Helpers\AssignLayer.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Helpers\FloatingOrigin.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Helpers\PropertyWrapper.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Helpers\RenderAlphaOnSurface.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Helpers\SortedListCachedArrays.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Helpers\TextureArrayHelpers.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Helpers\UnderwaterEffect.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Interaction\BoatProbes.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Interaction\FloatingObjectBase.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Interaction\ObjectWaterInteraction.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Interaction\SimpleFloatingObject.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\LodDataMgr.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\LodDataMgrAnimWaves.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\LodDataMgrDynWaves.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\LodDataMgrFlow.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\LodDataMgrFoam.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\LodDataMgrPersistent.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\LodDataMgrSeaFloorDepth.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\LodTransform.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\OceanDepthCache.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\RegisterAnimWavesInput.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\RegisterDynWavesInput.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\RegisterFlowInput.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\RegisterFoamInput.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\RegisterLodDataInput.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\RegisterMaskInput.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\RegisterSeaFloorDepthInput.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\Settings\SimSettingsAnimatedWaves.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\Settings\SimSettingsBase.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\Settings\SimSettingsFlow.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\Settings\SimSettingsFoam.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\Settings\SimSettingsWave.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\Shadows\LodDataMgrShadow.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\LodData\Shadows\SimSettingsShadow.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\OceanBuilder.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\OceanChunkRenderer.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\OceanRenderer.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\OceanValidation.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Reflection\OceanPlanarReflection.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Shapes\OceanWaveSpectrum.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Shapes\ShapeGerstnerBatched.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Time\TimeProviderBase.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Time\TimeProviderCustom.cs" />
-    <Compile Include="Assets\crest\Assets\Crest\Crest\Scripts\Time\TimeProviderDefault.cs" />
     <Compile Include="Assets\DarkTree FPS\Scripts\GameManagerDemo.cs" />
     <Compile Include="Assets\DarkTree FPS\Scripts\Inventory\AmmoCheck.cs" />
     <Compile Include="Assets\DarkTree FPS\Scripts\Inventory\ConsumeEvents.cs" />
@@ -207,8 +152,10 @@
     <None Include="Assets\crest\Assets\Crest\Crest\Shaders\OceanInputs\AnimWavesAddHeightFromGeometry.shader" />
     <None Include="Assets\crest\Assets\Crest\Crest\Shaders\OceanInputs\Resources\AnimWavesGerstnerBatch.shader" />
     <None Include="Assets\crest\Assets\Crest\Crest\Shaders\OceanFoam.hlsl" />
+    <None Include="Assets\crest\Assets\Crest\Crest\Shaders\OceanInputs\FlowAddFlowMap.shader" />
     <None Include="Assets\crest\Assets\Crest\Crest\Shaders\Resources\ShapeCombine.compute" />
     <None Include="Assets\MoveMotionPack\SampleScene\Shaders\ReflectiveDiffuseSpecTransp.shader" />
+    <None Include="Assets\crest\Assets\Crest\Crest\Shaders\OceanInputs\DynWavesSphereWaterInteraction.shader" />
     <None Include="Assets\crest\Assets\Crest\Crest\Shaders\OceanInputs\Resources\DynWavesDampenCircle.shader" />
     <None Include="Assets\Shaders\WavingGrass.shader" />
     <None Include="Assets\Shaders\DistanceFade.shader" />
@@ -254,6 +201,7 @@
     <None Include="Assets\crest\Assets\Crest\Crest\Shaders\OceanInputs\AnimWavesSetHeightToGeometry.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\crest\Assets\Crest\Crest\Shaders\Underwater\UnderwaterCurtain.shader" />
+    <None Include="Assets\crest\Assets\Crest\Crest\Shaders\OceanInputs\AnimWavesAddFromTex.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\crest\Assets\Crest\Crest\Shaders\OceanInputs\DynWavesObjectInteraction.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
@@ -853,6 +801,14 @@
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
       <Project>{D24F5B58-3A3B-082A-BF29-3E3E6DA72110}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
+    <ProjectReference Include="Crest.Examples.csproj">
+      <Project>{5C9FAD36-4DDB-EEE8-1378-A722E019F361}</Project>
+      <Name>Crest.Examples</Name>
+    </ProjectReference>
+    <ProjectReference Include="Crest.csproj">
+      <Project>{3218751E-7E38-7D5E-D508-1D237DE4E81A}</Project>
+      <Name>Crest</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

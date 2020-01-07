@@ -56,7 +56,9 @@ namespace Crest
         PropertyWrapperCompute _combineProperties;
         PropertyWrapperMaterial[] _combineMaterial;
 
-        static int sp_LD_TexArray_AnimatedWaves_Compute = Shader.PropertyToID("_LD_TexArray_AnimatedWaves_Compute");
+        readonly static int sp_LD_TexArray_AnimatedWaves_Compute = Shader.PropertyToID("_LD_TexArray_AnimatedWaves_Compute");
+        readonly static int sp_LD_TexArray_WaveBuffer = Shader.PropertyToID("_LD_TexArray_WaveBuffer");
+        const string s_textureArrayName = "_LD_TexArray_AnimatedWaves";
 
         public override void UseSettings(SimSettingsBase settings) { OceanRenderer.Instance._simSettingsAnimatedWaves = settings as SimSettingsAnimatedWaves; }
         public override SimSettingsBase CreateDefaultSettings()
@@ -131,10 +133,10 @@ namespace Crest
                 var drawOctaveWavelength = data.Wavelength;
                 isTransition = 0;
 
-                // No wavelength preference
+                // No wavelength preference - don't draw per-lod
                 if (drawOctaveWavelength == 0f)
                 {
-                    return 1f;
+                    return 0f;
                 }
 
                 // Too small for this lod
@@ -361,7 +363,7 @@ namespace Crest
 
         public void BindWaveBuffer(IPropertyWrapper properties, bool sourceLod = false)
         {
-            properties.SetTexture(Shader.PropertyToID("_LD_TexArray_WaveBuffer"), _waveBuffers);
+            properties.SetTexture(sp_LD_TexArray_WaveBuffer, _waveBuffers);
             BindData(properties, null, true, ref OceanRenderer.Instance._lodTransform._renderData, sourceLod);
         }
 
@@ -421,8 +423,7 @@ namespace Crest
             return -1;
         }
 
-        public static string TextureArrayName = "_LD_TexArray_AnimatedWaves";
-        private static TextureArrayParamIds textureArrayParamIds = new TextureArrayParamIds(TextureArrayName);
+        private static TextureArrayParamIds textureArrayParamIds = new TextureArrayParamIds(s_textureArrayName);
         public static int ParamIdSampler(bool sourceLod = false) { return textureArrayParamIds.GetId(sourceLod); }
         protected override int GetParamIdSampler(bool sourceLod = false)
         {

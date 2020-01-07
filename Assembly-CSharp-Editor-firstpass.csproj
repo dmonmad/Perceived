@@ -676,6 +676,14 @@
       <Project>{D24F5B58-3A3B-082A-BF29-3E3E6DA72110}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
+    <ProjectReference Include="Crest.Examples.csproj">
+      <Project>{5C9FAD36-4DDB-EEE8-1378-A722E019F361}</Project>
+      <Name>Crest.Examples</Name>
+    </ProjectReference>
+    <ProjectReference Include="Crest.csproj">
+      <Project>{3218751E-7E38-7D5E-D508-1D237DE4E81A}</Project>
+      <Name>Crest</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
